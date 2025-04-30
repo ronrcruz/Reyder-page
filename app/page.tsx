@@ -87,8 +87,8 @@ export default function Home() {
           {/* Fallback background - will show while video loads or if video fails */}
           <div className="absolute inset-0 bg-gradient-to-br from-purple-800 via-purple-700 to-purple-900 z-0"></div>
 
-          {/* Video background */}
-          <VideoBackground src="/hero-background.webm" />
+          {/* Video background - using the correct filename */}
+          <VideoBackground src="/containers on train_1.webm" />
 
           {/* Hero content */}
           <div className="container relative z-30 px-4 md:px-6 py-12 md:py-24 lg:py-32">
