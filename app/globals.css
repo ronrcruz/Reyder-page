@@ -1,3 +1,5 @@
+@import "./brand-colors.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -13,7 +15,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 271 91% 37%;
+    --primary: 288 45% 33%; /* #712f79 */
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -72,6 +74,12 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .bg-radial-vignette {
+    background: radial-gradient(circle, transparent 40%, rgba(0, 0, 0, 0.4) 80%, rgba(0, 0, 0, 0.6) 100%);
   }
 }
 
