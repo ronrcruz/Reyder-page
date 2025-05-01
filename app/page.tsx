@@ -110,10 +110,6 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="max-w-3xl mx-auto text-center space-y-8"
             >
-              <div className="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-sm font-medium text-white backdrop-blur-md">
-                <span className="flex h-2 w-2 rounded-full bg-green-500 mr-2"></span>
-                Premium Mobile Device Wholesale
-              </div>
               <h1 className="text-4xl font-bold tracking-tighter text-white sm:text-5xl xl:text-6xl/none">
                 Elevate Your Inventory with{" "}
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-green-500">
@@ -146,7 +142,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Rest of the page content remains the same */}
         {/* Stats Section */}
         <section className="w-full py-12 bg-white">
           <div className="container px-4 md:px-6">
@@ -195,6 +190,11 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Divider */}
+        <div className="container px-4 md:px-6">
+          <hr className="my-12 border-t border-purple-300" />
+        </div>
+
         {/* About Section */}
         <section id="about" className="w-full py-20 md:py-32">
           <div className="container px-4 md:px-6">
@@ -206,10 +206,6 @@ export default function Home() {
                 transition={{ duration: 0.5 }}
                 className="space-y-2"
               >
-                <div className="inline-flex items-center rounded-full bg-purple-50 px-3 py-1 text-sm font-medium text-purple-700">
-                  <span className="flex h-2 w-2 rounded-full bg-purple-600 mr-2"></span>
-                  About Us
-                </div>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-purple-600">
                   About Reyder Enterprises
                 </h2>

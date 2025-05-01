@@ -13,10 +13,6 @@ export function HeroContent() {
         transition={{ duration: 0.6 }}
         className="max-w-3xl mx-auto text-center space-y-8"
       >
-        <div className="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-sm font-medium text-white backdrop-blur-md">
-          <span className="flex h-2 w-2 rounded-full bg-green-500 mr-2"></span>
-          Premium Mobile Device Wholesale
-        </div>
         <h1 className="text-4xl font-bold tracking-tighter text-white sm:text-5xl xl:text-6xl/none">
           Elevate Your Inventory with{" "}
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-green-500">
