@@ -2,9 +2,9 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { Check, Globe, Truck, Phone, Laptop, Tablet, ChevronRight } from "lucide-react"
+import { Check, Globe, Truck, Phone, Laptop, Tablet, ChevronRight, ShoppingBag } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
-import { motion } from "framer-motion"
+import { motion, animate, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion"
 import { Logo } from "@/components/logo"
 import { BrandButton } from "@/components/brand-button"
 import { VideoBackground } from "@/components/video-background"
@@ -24,6 +24,65 @@ export default function Home() {
   const gradingSystemRef = useRef<HTMLDivElement>(null)
   const [isGradingSystemVisible, setIsGradingSystemVisible] = useState(false)
   const [isShippingVisible, setIsShippingVisible] = useState(false)
+  const [displayedStatsValues, setDisplayedStatsValues] = useState({
+    devices: 0,
+    partners: 0,
+    years: 0,
+    countries: 0,
+  })
+
+  // --- Scroll Animation State & Refs ---
+  const { scrollY } = useScroll();
+  const [isShrunk, setIsShrunk] = useState(false);
+  const shrinkThreshold = 90; // Revert to fixed threshold
+
+  // Update shrunk state based on fixed threshold
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setIsShrunk(latest > shrinkThreshold); 
+  });
+  // --- End Scroll Animation State & Refs ---
+
+  // --- Animation Variants ---
+  const containerVariants = {
+    initial: {
+      width: '100%',
+      borderRadius: '0px',
+      paddingTop: '1rem',
+      paddingBottom: '1rem',
+      backgroundColor: 'rgba(255, 255, 255, 0.8)',
+      borderColor: 'rgba(229, 231, 235, 1)',
+      borderBottomWidth: '1px',
+      boxShadow: 'none',
+    },
+    shrunk: {
+      width: '800px',
+      borderRadius: '999px',
+      paddingTop: '0.5rem',
+      paddingBottom: '0.5rem',
+      backgroundColor: 'rgba(255, 255, 255, 0.95)',
+      borderColor: 'rgba(229, 231, 235, 0)',
+      borderBottomWidth: '0px',
+      boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+    }
+  };
+
+  const logoVariants = {
+    initial: { scale: 1 },
+    shrunk: { scale: 0.85 }
+  };
+
+  // Button variants animate scale ONLY
+  const contactButtonVariants = {
+    initial: { scale: 1 },
+    shrunk: { scale: 0.85 }
+  };
+
+  const auctionButtonVariants = {
+    initial: { scale: 1 },
+    shrunk: { scale: 0.85 }
+  };
+
+  // --- End Animation Variants ---
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -61,12 +120,29 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md">
-        <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2">
+      {/* Outer header: Removed py-2 */}
+      <motion.header className="sticky top-0 z-50 w-full">
+        {/* Inner container: Animates. */}
+        <motion.div
+          className={`relative mx-auto flex items-center px-4 md:px-6 backdrop-blur-md ${isShrunk ? 'shadow-md' : ''}`}
+          variants={containerVariants}
+          animate={isShrunk ? 'shrunk' : 'initial'}
+          initial="initial"
+          transition={{ duration: 0.4, ease: "easeInOut" }}
+        >
+          {/* Logo */} 
+          <motion.div
+            variants={logoVariants}
+            animate={isShrunk ? 'shrunk' : 'initial'}
+            initial="initial"
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            style={{ transformOrigin: 'left center' }}
+          >
             <Logo />
-          </div>
-          <nav className="hidden md:flex gap-6">
+          </motion.div>
+
+          {/* Nav: Apply absolute positioning unconditionally for centering */}
+          <nav className="hidden md:flex gap-6 absolute left-1/2 transform -translate-x-1/2">
             <Link href="#about" className="text-sm font-medium hover:text-purple-700 transition-colors">
               About
             </Link>
@@ -80,21 +156,85 @@ export default function Home() {
               Shipping
             </Link>
           </nav>
-          <div className="flex items-center gap-4">
-            <BrandButton
+
+          {/* Right Buttons: Position absolutely. Animate scale only. Static content. */}
+          <div className="absolute top-1/2 right-4 md:right-6 transform -translate-y-1/2 flex items-center gap-4">
+            <motion.a
+              href="#contact"
+              // Static padding, apply scale variants
+              className="inline-flex h-10 items-center justify-center rounded-full border border-purple-200 bg-white px-6 text-sm font-medium text-purple-700 shadow-sm transition-colors hover:bg-purple-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-purple-600 overflow-hidden whitespace-nowrap"
+              style={{ transformOrigin: 'right center' }}
+              variants={contactButtonVariants}
+              animate={isShrunk ? 'shrunk' : 'initial'}
+              initial="initial"
+              transition={{ duration: 0.4, ease: "easeInOut" }} // Match container transition
+            >
+              {/* Reintroduce AnimatePresence with FAST content fade */}
+              <AnimatePresence initial={false}>
+                {isShrunk ? (
+                  <motion.span
+                    key="icon-phone"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.1 }} // Fast fade
+                  >
+                    <Phone className="h-5 w-5 flex-shrink-0" />
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key="text-contact"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.1 }} // Fast fade
+                  >
+                    Contact Us
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </motion.a>
+            <motion.a
               href="https://auctions.reyderenterprises.com"
               target="_blank"
               rel="noopener noreferrer"
-              variant="purple"
-              size="md"
+              className="inline-flex h-10 items-center justify-center rounded-full bg-purple-600 px-6 text-sm font-medium text-white shadow-sm transition-colors hover:bg-purple-700 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-purple-700 overflow-hidden whitespace-nowrap"
+              style={{ transformOrigin: 'right center' }}
+              variants={auctionButtonVariants}
+              animate={isShrunk ? 'shrunk' : 'initial'}
+              initial="initial"
+              transition={{ duration: 0.4, ease: "easeInOut" }} // Match container transition
             >
-              Visit Auctions Platform
-            </BrandButton>
+              {/* Reintroduce AnimatePresence with FAST content fade */}
+              <AnimatePresence initial={false}>
+                {isShrunk ? (
+                  <motion.span
+                    key="icon-bag"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.1 }} // Fast fade
+                  >
+                    <ShoppingBag className="h-5 w-5 flex-shrink-0" />
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key="text-auctions"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.1 }} // Fast fade
+                  >
+                    Visit Auctions Platform
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </motion.a>
           </div>
-        </div>
-      </header>
+        </motion.div>
+      </motion.header>
       <main className="flex-1">
-        {/* Hero Section with Video Background */}
+        {/* Hero Section with Video Background - Removed ref */}
         <section className="relative w-full min-h-[80vh] flex items-center overflow-hidden">
           {/* Fallback background - will show while video loads or if video fails */}
           <div className="absolute inset-0 bg-gradient-to-br from-purple-800 via-purple-700 to-purple-900"></div>
@@ -132,10 +272,10 @@ export default function Home() {
                   Join Our Auctions
                 </BrandButton>
                 <Link
-                  href="#process"
+                  href="#contact"
                   className="inline-flex h-12 items-center justify-center rounded-full border border-white/30 bg-white/10 px-8 text-sm font-medium text-white shadow-lg backdrop-blur-md transition-all hover:bg-white/20 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
                 >
-                  Learn More
+                  Contact Us
                 </Link>
               </div>
             </motion.div>
@@ -144,8 +284,52 @@ export default function Home() {
 
         {/* Stats Section */}
         <section className="w-full py-12 bg-white">
-          <div className="container px-4 md:px-6">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {/* Apply transform to shift container up 5px */}
+          <div className="container px-4 md:px-6" style={{ transform: 'translateY(-12px)' }}>
+            {/* Wrap the grid in a motion.div to detect when it enters viewport */}
+            <motion.div 
+              className="grid grid-cols-2 md:grid-cols-4 gap-8"
+              onViewportEnter={() => {
+                const controls = {
+                  devices: animate(0, 10000, {
+                    duration: 1.5,
+                    ease: "easeOut",
+                    onUpdate(value) {
+                      setDisplayedStatsValues(prev => ({ ...prev, devices: Math.round(value) }));
+                    }
+                  }),
+                  partners: animate(0, 500, {
+                    duration: 1.5,
+                    ease: "easeOut",
+                    onUpdate(value) {
+                      setDisplayedStatsValues(prev => ({ ...prev, partners: Math.round(value) }));
+                    }
+                  }),
+                  years: animate(0, 15, {
+                    duration: 1.5,
+                    ease: "easeOut",
+                    onUpdate(value) {
+                      setDisplayedStatsValues(prev => ({ ...prev, years: Math.round(value) }));
+                    }
+                  }),
+                  countries: animate(0, 100, {
+                    duration: 1.5,
+                    ease: "easeOut",
+                    onUpdate(value) {
+                      setDisplayedStatsValues(prev => ({ ...prev, countries: Math.round(value) }));
+                    }
+                  }),
+                };
+
+                return () => {
+                  controls.devices.stop();
+                  controls.partners.stop();
+                  controls.years.stop();
+                  controls.countries.stop();
+                };
+              }}
+              viewport={{ once: true }}
+            >
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -153,8 +337,10 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: 0.1 }}
                 className="flex flex-col items-center text-center"
               >
-                <div className="text-3xl md:text-4xl font-bold text-purple-600">10K+</div>
-                <p className="text-sm text-gray-500 mt-1">Devices Monthly</p>
+                <div className="text-3xl md:text-4xl font-bold text-purple-600">
+                  {displayedStatsValues.devices.toLocaleString()}
+                </div>
+                <p className="text-sm text-gray-500 mt-1">Devices Processed</p>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -163,7 +349,9 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="flex flex-col items-center text-center"
               >
-                <div className="text-3xl md:text-4xl font-bold text-purple-600">500+</div>
+                <div className="text-3xl md:text-4xl font-bold text-purple-600">
+                  {displayedStatsValues.partners}+
+                </div>
                 <p className="text-sm text-gray-500 mt-1">Business Partners</p>
               </motion.div>
               <motion.div
@@ -173,8 +361,10 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="flex flex-col items-center text-center"
               >
-                <div className="text-3xl md:text-4xl font-bold text-purple-600">99%</div>
-                <p className="text-sm text-gray-500 mt-1">Satisfaction Rate</p>
+                <div className="text-3xl md:text-4xl font-bold text-purple-600">
+                  {displayedStatsValues.years}+
+                </div>
+                <p className="text-sm text-gray-500 mt-1">Years in Business</p>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -183,10 +373,12 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: 0.4 }}
                 className="flex flex-col items-center text-center"
               >
-                <div className="text-3xl md:text-4xl font-bold text-purple-600">24/7</div>
-                <p className="text-sm text-gray-500 mt-1">Customer Support</p>
+                <div className="text-3xl md:text-4xl font-bold text-purple-600">
+                  {displayedStatsValues.countries}+
+                </div>
+                <p className="text-sm text-gray-500 mt-1">Countries Served</p>
               </motion.div>
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -725,6 +917,46 @@ export default function Home() {
           </div>
         </section>
       </main>
+      {/* Added Contact Section */} 
+      <section id="contact" className="w-full py-20 md:py-32 bg-gray-100">
+        <div className="container px-4 md:px-6">
+          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="space-y-2"
+            >
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-purple-600">
+                Get In Touch
+              </h2>
+              <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                Have questions or ready to get started? Contact us today!
+              </p>
+            </motion.div>
+          </div>
+          <div className="mx-auto max-w-md text-center">
+            {/* Placeholder for WhatsApp Contact */}
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-semibold mb-4 text-purple-700">Contact via WhatsApp</h3>
+              <p className="text-gray-600 mb-4">
+                Click the button below or scan the QR code to start a chat with us on WhatsApp.
+              </p>
+              {/* Add WhatsApp button/link here */}
+              <BrandButton 
+                href="#" // Replace with actual WhatsApp link
+                variant="green"
+                size="lg"
+              >
+                Chat on WhatsApp
+              </BrandButton>
+              {/* Add WhatsApp QR code image here if desired */}
+              {/* <Image src="/whatsapp-qr.png" width={150} height={150} alt="WhatsApp QR Code" className="mx-auto mt-4" /> */}
+            </div>
+          </div>
+        </div>
+      </section>
       <footer className="w-full border-t bg-white py-8">
         <div className="container flex flex-col items-center justify-center gap-4 px-4 md:px-6 md:flex-row md:justify-between">
           <div className="flex items-center gap-2">
