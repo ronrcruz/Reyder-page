@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Check, Globe, Truck, Phone, Laptop, Tablet, ChevronRight } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
-import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion"
+import { motion } from "framer-motion"
 import { Logo } from "@/components/logo"
 import { BrandButton } from "@/components/brand-button"
 import { VideoBackground } from "@/components/video-background"
@@ -25,37 +25,7 @@ export default function Home() {
   const [isGradingSystemVisible, setIsGradingSystemVisible] = useState(false)
   const [isShippingVisible, setIsShippingVisible] = useState(false)
 
-  // Scroll tracking BEFORE pinning
-  const { scrollYProgress: prePinScrollYProgress } = useScroll({
-    target: processRef,
-    offset: ["start 0.8", "start start"] // Start=80% vh, End=Pin point
-  })
-
-  // Scroll tracking AFTER pinning
-   const { scrollYProgress: postPinScrollYProgress } = useScroll({
-    target: processRef,
-    offset: ["start start", "end end"] // Start=Pin point, End=End of 400vh
-  })
-
-  // State to track if pinning has occurred
-  const [hasPinned, setHasPinned] = useState(false);
-
-  // Listen to prePinScrollYProgress to detect when pinning happens
-  useMotionValueEvent(prePinScrollYProgress, "change", (latest) => {
-    // console.log("PrePin Progress:", latest); // Debugging
-    if (latest >= 1) {
-      setHasPinned(true);
-    } else {
-      // Reset if scrolling back up past the pin point
-      setHasPinned(false);
-    }
-  })
-
-  // State to trigger Step 1's initial entrance animation
-  const [isProcessSectionEntering, setIsProcessSectionEntering] = useState(false)
-
   useEffect(() => {
-    // Combined observer for non-process sections and process section entrance
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -63,22 +33,13 @@ export default function Home() {
             setIsGradingSystemVisible(entry.isIntersecting)
           } else if (entry.target === shippingRef.current) {
             setIsShippingVisible(entry.isIntersecting)
-          } else if (entry.target === processRef.current) {
-             // Set entrance state if target is intersecting (threshold determines when)
-            if (entry.isIntersecting) {
-              setIsProcessSectionEntering(true)
-            }
-             // Optional: Set back to false if needed when scrolling out completely upwards
-             // else {
-             //   setIsProcessSectionEntering(false)
-             // }
           }
         })
       },
-      { threshold: 0.1 }, // Trigger process entrance when 10% is visible
+      { threshold: 0.3 },
     )
 
-    const refsToObserve = [gradingSystemRef, shippingRef, processRef] // Add processRef
+    const refsToObserve = [gradingSystemRef, shippingRef]
     
     refsToObserve.forEach(ref => {
       if (ref.current) {
@@ -95,27 +56,8 @@ export default function Home() {
     }
   }, [])
 
-  // --- Transformation Mappings --- 
-  const step1EnterOpacity = useTransform(prePinScrollYProgress, [0, 1], [0, 1]);
-  const step1EnterY = useTransform(prePinScrollYProgress, [0, 1], ["25%", "0%"]); 
-  const step1ExitOpacity = useTransform(postPinScrollYProgress, [0, 0.25, 0.30], [1, 1, 0]);
-  const step1ExitY = useTransform(postPinScrollYProgress, [0, 0.25, 0.30], ["0%", "0%", "-50%"]); 
-  const step2Opacity = useTransform(postPinScrollYProgress, [0.30, 0.35, 0.55, 0.60], [0, 1, 1, 0]);
-  const step2Y = useTransform(postPinScrollYProgress, [0.30, 0.35, 0.55, 0.60], ["50%", "0%", "0%", "-50%"]);
-  const step3Opacity = useTransform(postPinScrollYProgress, [0.60, 0.65, 0.85, 0.90], [0, 1, 1, 0]);
-  const step3Y = useTransform(postPinScrollYProgress, [0.60, 0.65, 0.85, 0.90], ["50%", "0%", "0%", "-50%"]);
-  const step4Opacity = useTransform(postPinScrollYProgress, [0.90, 1], [0, 1]);
-  const step4Y = useTransform(postPinScrollYProgress, [0.90, 1], ["50%", "0%"]);
-
-  // Background Layer Opacity Transforms (Driven by post-pin scroll)
-  // Layer 1 (Top): Visible initially, fades out as Step 2 appears
-  const gradientLayer1Opacity = useTransform(postPinScrollYProgress, [0, 0.25, 0.30], [1, 1, 0]);
-  // Layer 2: Fades in as 1 fades out, then fades out as Step 3 appears
-  const gradientLayer2Opacity = useTransform(postPinScrollYProgress, [0.25, 0.30, 0.55, 0.60], [0, 1, 1, 0]);
-  // Layer 3: Fades in as 2 fades out, then fades out as Step 4 appears
-  const gradientLayer3Opacity = useTransform(postPinScrollYProgress, [0.55, 0.60, 0.85, 0.90], [0, 1, 1, 0]);
-  // Layer 4 (Bottom): Fades in as 3 fades out, then stays
-  const gradientLayer4Opacity = useTransform(postPinScrollYProgress, [0.85, 0.90], [0, 1]);
+  // Define the mask style string once
+  const maskStyle = 'linear-gradient(135deg, black calc(var(--mask-gradient-stop) - 5%), transparent calc(var(--mask-gradient-stop) + 5%))';
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -350,134 +292,128 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Process Section - Reverted Structure */}
-        <section id="process" className="relative w-full bg-gray-100">
-           {/* Container defining scroll height for pinning */}
-          <div ref={processRef} className="relative h-[205vh]">
-             {/* Sticky container includes Header and Steps */}
-            <motion.div 
-              className="sticky top-0 h-screen flex flex-col items-center justify-start pt-24 pb-10 overflow-hidden"
-            >
-              {/* Background Gradient Layers Container */}
-              <div className="absolute inset-0 z-0">
-                 {/* Layer 4: #03A9F4 -> #FFC107 (Placeholder) - 35% Opacity */}
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-br from-[#03A9F459] to-[#FFC10759]" // Changed to 59 suffix
-                  style={{ opacity: gradientLayer4Opacity }} 
-                />
-                 {/* Layer 3: #FFC107 -> #8edf34 (Placeholder Start) - 35% Opacity */}
-                 <motion.div 
-                  className="absolute inset-0 bg-gradient-to-br from-[#FFC10759] to-[#8edf3459]" // Changed to 59 suffix
-                  style={{ opacity: gradientLayer3Opacity }} 
-                 />
-                 {/* Layer 2: #8edf34 -> #bf99f2 - 35% Opacity */}
-                 <motion.div 
-                  className="absolute inset-0 bg-gradient-to-br from-[#8edf3459] to-[#bf99f259]" // Changed to 59 suffix
-                  style={{ opacity: gradientLayer2Opacity }} 
-                 />
-                 {/* Layer 1: #bf99f2 -> #995bd5 (Initial) - 35% Opacity */}
-                 <motion.div 
-                  className="absolute inset-0 bg-gradient-to-br from-[#bf99f259] to-[#995bd559]" // Changed to 59 suffix
-                  style={{ opacity: gradientLayer1Opacity }} 
-                 />
-              </div>
+        {/* Process Section - Static Timeline */}
+        <section id="process" className="w-full py-20 md:py-32 bg-gray-50 overflow-hidden">
+          <div className="container px-4 md:px-6">
+            {/* Section Header */}
+            <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16 md:mb-24">
+               <h2 className="text-4xl font-bold tracking-tight sm:text-5xl text-purple-800">Our Streamlined Process</h2>
+               <p className="max-w-[700px] mx-auto text-gray-600 md:text-xl/relaxed">
+                 Follow our rigorous steps ensuring quality and security for every device.
+               </p>
+            </div>
 
-              {/* Section Header (z-10) - Styled as Pill */}
-              <div className="container px-4 md:px-6 mb-10 md:mb-16 relative z-10">
-                 {/* Pill wrapper with background, padding, rounding, shadow */}
-                 <div className="max-w-2xl mx-auto bg-white/80 backdrop-blur-md rounded-full px-8 py-5 shadow-[0_4px_8px_rgba(0,0,0,0.15),_0_1px_3px_rgba(0,0,0,0.1)]">
-                   <div className="space-y-2 text-center">
-                     <h2 className="text-4xl font-bold tracking-tight sm:text-5xl text-purple-800">Our Streamlined Process</h2>
-                   </div>
-                 </div>
-                 <p className="max-w-[700px] mx-auto text-purple-100/90 md:text-xl/relaxed mt-4 text-center text-shadow-sm">
-                    Follow our rigorous steps ensuring quality and security for every device.
-                 </p>
-              </div>
+            {/* Timeline Container */}
+            <div className="relative max-w-5xl mx-auto">
+              {/* Vertical Line */}
+              <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-300 via-purple-500 to-green-500 transform -translate-x-1/2 hidden md:block rounded-full"></div>
 
-              {/* Animated Steps Container - Centered in remaining space */}
-              <div className="relative w-full max-w-4xl flex-1 flex items-center justify-center z-10"> 
-                 {/* Steps 1-4 apply transforms as before */}
-                <motion.div 
-                   /* Step 1 */
-                  className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 text-gray-800"
-                  style={{
-                    opacity: hasPinned ? step1ExitOpacity : step1EnterOpacity,
-                    y: hasPinned ? step1ExitY : step1EnterY,
-                  }}
-                >
-                  <Image 
-                      src="/data-wiping.jpg" 
-                      width={450} 
-                      height={280}
-                      alt="Secure data wiping" 
-                      className="rounded-xl mb-5 shadow-xl border border-gray-200"
-                  />
-                  <h3 className="text-3xl font-semibold mb-2 text-purple-700">1. Secure Data Wiping</h3>
-                  <p className="text-lg max-w-md mx-auto text-gray-600">Certified procedures protect privacy and ensure compliance.</p>
-                </motion.div>
-                 <motion.div 
-                   /* Step 2 */
-                  className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 text-gray-800"
-                  style={{ 
-                    opacity: step2Opacity, 
-                    y: step2Y, 
-                  }}
-                >
-                  <Image 
-                      src="/cleaning.jpg" 
-                      width={450} 
-                      height={280} 
-                      alt="Professional Cleaning" 
-                      className="rounded-xl mb-5 shadow-xl border border-gray-200"
-                  />
-                  <h3 className="text-3xl font-semibold mb-2 text-purple-700">2. Professional Cleaning</h3>
-                  <p className="text-lg max-w-md mx-auto text-gray-600">Meticulously cleaned and sanitized for high presentation standards.</p>
-                </motion.div>
-                 <motion.div 
-                   /* Step 3 */
-                  className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 text-gray-800"
-                  style={{ 
-                    opacity: step3Opacity, 
-                    y: step3Y, 
-                  }}
-                >
-                  <Image 
-                      src="/testing.jpg" 
-                      width={450} 
-                      height={280} 
-                      alt="Comprehensive Testing" 
-                      className="rounded-xl mb-5 shadow-xl border border-gray-200"
-                  />
-                  <h3 className="text-3xl font-semibold mb-2 text-purple-700">3. Comprehensive Testing</h3>
-                  <p className="text-lg max-w-md mx-auto text-gray-600">Rigorous multi-point testing ensures full hardware and software functionality.</p>
-                </motion.div>
-                <motion.div 
-                   /* Step 4 */
-                  className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 text-gray-800"
-                  style={{ 
-                    opacity: step4Opacity, 
-                    y: step4Y, 
-                  }}
-                >
-                  <Image 
-                      src="/grading.jpg" 
-                      width={450} 
-                      height={280} 
-                      alt="Detailed Grading" 
-                      className="rounded-xl mb-5 shadow-xl border border-gray-200"
-                  />
-                  <h3 className="text-3xl font-semibold mb-2 text-purple-700">4. Detailed Grading</h3>
-                  <p className="text-lg max-w-md mx-auto text-gray-600">Expert technicians assign grades based on a transparent, detailed system.</p>
-                </motion.div>
-              </div>
+              {/* Steps Wrapper */}
+              <div className="space-y-16 md:space-y-24">
 
-            </motion.div>
+                {/* Step 1: Data Wiping */} 
+                <div className="relative grid md:grid-cols-2 gap-8 items-center">
+                  {/* Number Marker (Right Aligned on Timeline for Left Content) */}
+                  <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-4 md:translate-y-0 w-12 h-12 rounded-full bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center text-white font-bold text-xl shadow-lg z-10">
+                    1
+                  </div>
+                  {/* Content Card (Left Side) */}
+                  <div className="md:order-1 md:pr-16 lg:pr-24">
+                     <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
+                       <Image
+                        src="/data-wiping.jpg"
+                        width={400}
+                        height={250}
+                        alt="Secure data wiping"
+                        className="rounded-lg w-full h-auto object-cover mb-4 shadow-sm"
+                      />
+                      <h3 className="text-2xl font-semibold mb-2 text-purple-700 text-center md:text-left">1. Secure Data Wiping</h3>
+                      <p className="text-gray-600 text-center md:text-left">
+                        All devices undergo certified, secure data wiping procedures to protect privacy and ensure compliance.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Step 2: Cleaning */} 
+                <div className="relative grid md:grid-cols-2 gap-8 items-center">
+                   {/* Number Marker (Left Aligned on Timeline for Right Content) */}
+                   <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-4 md:translate-y-0 w-12 h-12 rounded-full bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center text-white font-bold text-xl shadow-lg z-10">
+                    2
+                  </div>
+                  {/* Content Card (Right Side) */}
+                  <div className="md:order-2 md:pl-16 lg:pl-24">
+                     <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
+                       <Image
+                        src="/cleaning.jpg"
+                        width={400}
+                        height={250}
+                        alt="Professional Cleaning"
+                        className="rounded-lg w-full h-auto object-cover mb-4 shadow-sm"
+                      />
+                      <h3 className="text-2xl font-semibold mb-2 text-purple-700 text-center md:text-left">2. Professional Cleaning</h3>
+                      <p className="text-gray-600 text-center md:text-left">
+                        Devices are meticulously cleaned and sanitized to meet high presentation standards.
+                      </p>
+                     </div>
+                  </div>
+                </div>
+
+                {/* Step 3: Testing */} 
+                <div className="relative grid md:grid-cols-2 gap-8 items-center">
+                  {/* Number Marker (Right Aligned on Timeline for Left Content) */}
+                  <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-4 md:translate-y-0 w-12 h-12 rounded-full bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center text-white font-bold text-xl shadow-lg z-10">
+                    3
+                  </div>
+                   {/* Content Card (Left Side) */}
+                   <div className="md:order-1 md:pr-16 lg:pr-24">
+                     <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
+                        <Image
+                          src="/testing.jpg"
+                          width={400}
+                          height={250}
+                          alt="Comprehensive Testing"
+                          className="rounded-lg w-full h-auto object-cover mb-4 shadow-sm"
+                        />
+                        <h3 className="text-2xl font-semibold mb-2 text-purple-700 text-center md:text-left">3. Comprehensive Testing</h3>
+                        <p className="text-gray-600 text-center md:text-left">
+                          Rigorous multi-point testing ensures full hardware and software functionality.
+                        </p>
+                     </div>
+                  </div>
+                </div>
+
+                 {/* Step 4: Grading */} 
+                <div className="relative grid md:grid-cols-2 gap-8 items-center">
+                  {/* Number Marker (Left Aligned on Timeline for Right Content) */}
+                  <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-4 md:translate-y-0 w-12 h-12 rounded-full bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center text-white font-bold text-xl shadow-lg z-10">
+                    4
+                  </div>
+                  {/* Content Card (Right Side) */}
+                  <div className="md:order-2 md:pl-16 lg:pl-24">
+                     <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
+                        <Image
+                          src="/grading.jpg"
+                          width={400}
+                          height={250}
+                          alt="Detailed Grading"
+                          className="rounded-lg w-full h-auto object-cover mb-4 shadow-sm"
+                        />
+                        <h3 className="text-2xl font-semibold mb-2 text-purple-700 text-center md:text-left">4. Detailed Grading</h3>
+                        <p className="text-gray-600 text-center md:text-left">
+                           Expert technicians assign grades based on a transparent, detailed system.
+                        </p>
+                      </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Grading System */}
-        <section id="grading" ref={gradingSystemRef} className="w-full py-20 md:py-32 relative overflow-hidden">
+        {/* Grading System - Reduced Top Padding */}
+        <section id="grading" ref={gradingSystemRef} className="w-full py-16 md:py-20 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-white"></div>
           <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
           <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
