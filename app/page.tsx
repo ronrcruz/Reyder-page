@@ -356,10 +356,7 @@ export default function Home() {
           <div ref={processRef} className="relative h-[205vh]">
              {/* Sticky container includes Header and Steps */}
             <motion.div 
-              className="sticky top-0 h-screen flex flex-col items-center justify-start pt-20 pb-10 overflow-hidden"
-              // Idle breathing animation
-              animate={{ scale: [1, 1.005, 1] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="sticky top-0 h-screen flex flex-col items-center justify-start pt-24 pb-10 overflow-hidden"
             >
               {/* Background Gradient Layers Container */}
               <div className="absolute inset-0 z-0">
@@ -385,18 +382,17 @@ export default function Home() {
                  />
               </div>
 
-              {/* Section Header (z-10) */}
-              <div className="container px-4 md:px-6 text-center mb-10 md:mb-16 relative z-10">
-                 <div className="space-y-2">
-                   <div className="inline-flex items-center rounded-full bg-white/20 px-3 py-1 text-sm font-medium text-white backdrop-blur-sm">
-                     <span className="flex h-2 w-2 rounded-full bg-purple-400 mr-2"></span>
-                     Our Process
+              {/* Section Header (z-10) - Styled as Pill */}
+              <div className="container px-4 md:px-6 mb-10 md:mb-16 relative z-10">
+                 {/* Pill wrapper with background, padding, rounding, shadow */}
+                 <div className="max-w-2xl mx-auto bg-white/80 backdrop-blur-md rounded-full px-8 py-5 shadow-[0_4px_8px_rgba(0,0,0,0.15),_0_1px_3px_rgba(0,0,0,0.1)]">
+                   <div className="space-y-2 text-center">
+                     <h2 className="text-4xl font-bold tracking-tight sm:text-5xl text-purple-800">Our Streamlined Process</h2>
                    </div>
-                   <h2 className="text-4xl font-bold tracking-tight sm:text-5xl text-white shadow-sm">Our Streamlined Process</h2>
-                   <p className="max-w-[700px] mx-auto text-purple-100/90 md:text-xl/relaxed">
-                     Follow our rigorous steps ensuring quality and security for every device.
-                   </p>
                  </div>
+                 <p className="max-w-[700px] mx-auto text-purple-100/90 md:text-xl/relaxed mt-4 text-center text-shadow-sm">
+                    Follow our rigorous steps ensuring quality and security for every device.
+                 </p>
               </div>
 
               {/* Animated Steps Container - Centered in remaining space */}
@@ -404,11 +400,10 @@ export default function Home() {
                  {/* Steps 1-4 apply transforms as before */}
                 <motion.div 
                    /* Step 1 */
-                  className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 text-white"
+                  className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 text-gray-800"
                   style={{
                     opacity: hasPinned ? step1ExitOpacity : step1EnterOpacity,
                     y: hasPinned ? step1ExitY : step1EnterY,
-                    textShadow: '0 1px 3px rgba(0,0,0,0.2)' // Add text shadow for readability
                   }}
                 >
                   <Image 
@@ -418,16 +413,15 @@ export default function Home() {
                       alt="Secure data wiping" 
                       className="rounded-xl mb-5 shadow-xl border border-gray-200"
                   />
-                  <h3 className="text-3xl font-semibold mb-2">1. Secure Data Wiping</h3>
-                  <p className="text-lg max-w-md mx-auto">Certified procedures protect privacy and ensure compliance.</p>
+                  <h3 className="text-3xl font-semibold mb-2 text-purple-700">1. Secure Data Wiping</h3>
+                  <p className="text-lg max-w-md mx-auto text-gray-600">Certified procedures protect privacy and ensure compliance.</p>
                 </motion.div>
                  <motion.div 
                    /* Step 2 */
-                  className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 text-white"
+                  className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 text-gray-800"
                   style={{ 
                     opacity: step2Opacity, 
                     y: step2Y, 
-                    textShadow: '0 1px 3px rgba(0,0,0,0.2)' 
                   }}
                 >
                   <Image 
@@ -437,16 +431,15 @@ export default function Home() {
                       alt="Professional Cleaning" 
                       className="rounded-xl mb-5 shadow-xl border border-gray-200"
                   />
-                  <h3 className="text-3xl font-semibold mb-2">2. Professional Cleaning</h3>
-                  <p className="text-lg max-w-md mx-auto">Meticulously cleaned and sanitized for high presentation standards.</p>
+                  <h3 className="text-3xl font-semibold mb-2 text-purple-700">2. Professional Cleaning</h3>
+                  <p className="text-lg max-w-md mx-auto text-gray-600">Meticulously cleaned and sanitized for high presentation standards.</p>
                 </motion.div>
                  <motion.div 
                    /* Step 3 */
-                  className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 text-white"
+                  className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 text-gray-800"
                   style={{ 
                     opacity: step3Opacity, 
                     y: step3Y, 
-                    textShadow: '0 1px 3px rgba(0,0,0,0.2)' 
                   }}
                 >
                   <Image 
@@ -456,16 +449,15 @@ export default function Home() {
                       alt="Comprehensive Testing" 
                       className="rounded-xl mb-5 shadow-xl border border-gray-200"
                   />
-                  <h3 className="text-3xl font-semibold mb-2">3. Comprehensive Testing</h3>
-                  <p className="text-lg max-w-md mx-auto">Rigorous multi-point testing ensures full hardware and software functionality.</p>
+                  <h3 className="text-3xl font-semibold mb-2 text-purple-700">3. Comprehensive Testing</h3>
+                  <p className="text-lg max-w-md mx-auto text-gray-600">Rigorous multi-point testing ensures full hardware and software functionality.</p>
                 </motion.div>
                 <motion.div 
                    /* Step 4 */
-                  className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 text-white"
+                  className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 text-gray-800"
                   style={{ 
                     opacity: step4Opacity, 
                     y: step4Y, 
-                    textShadow: '0 1px 3px rgba(0,0,0,0.2)' 
                   }}
                 >
                   <Image 
@@ -475,8 +467,8 @@ export default function Home() {
                       alt="Detailed Grading" 
                       className="rounded-xl mb-5 shadow-xl border border-gray-200"
                   />
-                  <h3 className="text-3xl font-semibold mb-2">4. Detailed Grading</h3>
-                  <p className="text-lg max-w-md mx-auto">Expert technicians assign grades based on a transparent, detailed system.</p>
+                  <h3 className="text-3xl font-semibold mb-2 text-purple-700">4. Detailed Grading</h3>
+                  <p className="text-lg max-w-md mx-auto text-gray-600">Expert technicians assign grades based on a transparent, detailed system.</p>
                 </motion.div>
               </div>
 
@@ -498,10 +490,6 @@ export default function Home() {
                 transition={{ duration: 0.5 }}
                 className="space-y-2"
               >
-                <div className="inline-flex items-center rounded-full bg-purple-50 px-3 py-1 text-sm font-medium text-purple-700">
-                  <span className="flex h-2 w-2 rounded-full bg-purple-600 mr-2"></span>
-                  Grading System
-                </div>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-purple-600">Our Grading System</h2>
                 <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   We use a comprehensive in-house grading system to ensure transparency and quality.
@@ -639,10 +627,6 @@ export default function Home() {
                 transition={{ duration: 0.5 }}
                 className="space-y-2"
               >
-                <div className="inline-flex items-center rounded-full bg-purple-50 px-3 py-1 text-sm font-medium text-purple-700">
-                  <span className="flex h-2 w-2 rounded-full bg-purple-600 mr-2"></span>
-                  Shipping
-                </div>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-purple-600">
                   Shipping Information
                 </h2>
@@ -782,10 +766,6 @@ export default function Home() {
                 transition={{ duration: 0.5 }}
                 className="space-y-4"
               >
-                <div className="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-sm font-medium text-white backdrop-blur-md">
-                  <span className="flex h-2 w-2 rounded-full bg-green-500 mr-2"></span>
-                  Join Our Platform
-                </div>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-white">
                   Ready to Access Premium Mobile Devices?
                 </h2>

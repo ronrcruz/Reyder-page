@@ -22,6 +22,7 @@ export function VideoBackground({ src, className = "" }: VideoBackgroundProps) {
         preload="auto"
       >
         <source src={src} type="video/webm" />
+        <source src={src.replace('.webm', '.mp4')} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
