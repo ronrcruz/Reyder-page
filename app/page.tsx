@@ -242,7 +242,7 @@ export default function Home() {
                     transition={{ duration: 0.4, ease: "easeInOut" }}
                     style={{ maxWidth: '100%', overflow: 'hidden' }}
                   >
-                    Visit Auctions Platform
+                    Become a Buyer
                   </motion.span>
                 )}
               </AnimatePresence>
@@ -274,8 +274,8 @@ export default function Home() {
                 </span>
               </h1>
               <p className="max-w-[800px] mx-auto text-white/90 text-lg md:text-xl">
-                Access high-quality mobile devices through our exclusive auctions platform. Join industry professionals
-                sourcing the best wholesale inventory.
+              Reyder Enterprises offers Daily Access to Premium Mobile Inventory.
+              Join top resellers in exclusive auctions built for speed, profit, and serious volume.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
                 <BrandButton
@@ -286,7 +286,7 @@ export default function Home() {
                   size="lg"
                   icon
                 >
-                  Join Our Auctions
+                  Create an Account
                 </BrandButton>
                 <Link
                   href="#contact"
@@ -956,7 +956,7 @@ export default function Home() {
           <div className="mx-auto max-w-md text-center">
             {/* Placeholder for WhatsApp Contact */}
             <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4 text-purple-700">Contact via WhatsApp</h3>
+              <h3 className="text-xl font-semibold mb-4 text-purple-700">Contact vi WhatsApp</h3>
               <p className="text-gray-600 mb-4">
                 Click the button below or scan the QR code to start a chat with us on WhatsApp.
               </p>
