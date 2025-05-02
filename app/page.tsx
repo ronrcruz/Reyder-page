@@ -43,6 +43,17 @@ export default function Home() {
   // --- End Scroll Animation State & Refs ---
 
   // --- Animation Variants ---
+  const headerVariants = {
+    initial: {
+      top: '0px',
+      transition: { duration: 0.4, ease: "easeInOut" }
+    },
+    shrunk: {
+      top: '1.5rem', // Add 1rem top offset when shrunk
+      transition: { duration: 0.4, ease: "easeInOut" }
+    }
+  };
+
   const containerVariants = {
     initial: {
       width: '100%',
@@ -52,7 +63,6 @@ export default function Home() {
       backgroundColor: 'rgba(255, 255, 255, 0.8)',
       borderColor: 'rgba(229, 231, 235, 1)',
       borderBottomWidth: '1px',
-      boxShadow: 'none',
     },
     shrunk: {
       width: '800px',
@@ -62,7 +72,6 @@ export default function Home() {
       backgroundColor: 'rgba(255, 255, 255, 0.95)',
       borderColor: 'rgba(229, 231, 235, 0)',
       borderBottomWidth: '0px',
-      boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
     }
   };
 
@@ -71,15 +80,15 @@ export default function Home() {
     shrunk: { scale: 0.85 }
   };
 
-  // Button variants animate scale ONLY
+  // Button variants - remove scale animation, layout prop will handle size change
   const contactButtonVariants = {
-    initial: { scale: 1 },
-    shrunk: { scale: 0.85 }
+    initial: { /* No explicit animation needed here anymore */ },
+    shrunk: { /* No explicit animation needed here anymore */ }
   };
 
   const auctionButtonVariants = {
-    initial: { scale: 1 },
-    shrunk: { scale: 0.85 }
+    initial: { /* No explicit animation needed here anymore */ },
+    shrunk: { /* No explicit animation needed here anymore */ }
   };
 
   // --- End Animation Variants ---
@@ -120,23 +129,30 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Outer header: Removed py-2 */}
-      <motion.header className="sticky top-0 z-50 w-full">
-        {/* Inner container: Animates. */}
+      {/* Outer header: Apply header variants and remove top-0 */}
+      <motion.header
+        className="sticky z-50 w-full"
+        variants={headerVariants}
+        animate={isShrunk ? 'shrunk' : 'initial'}
+        initial="initial"
+        style={{ willChange: 'top' }}
+      >
+        {/* Inner container: Animates style changes */}
         <motion.div
+          layout
           className={`relative mx-auto flex items-center px-4 md:px-6 backdrop-blur-md ${isShrunk ? 'shadow-md' : ''}`}
           variants={containerVariants}
           animate={isShrunk ? 'shrunk' : 'initial'}
           initial="initial"
           transition={{ duration: 0.4, ease: "easeInOut" }}
+          style={{ willChange: 'transform, width, border-radius, padding, background-color, border-color' }}
         >
           {/* Logo */} 
           <motion.div
             variants={logoVariants}
             animate={isShrunk ? 'shrunk' : 'initial'}
             initial="initial"
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            style={{ transformOrigin: 'left center' }}
+            style={{ transformOrigin: 'left center', willChange: 'transform' }}
           >
             <Logo />
           </motion.div>
@@ -160,24 +176,23 @@ export default function Home() {
           {/* Right Buttons: Position absolutely. Animate scale only. Static content. */}
           <div className="absolute top-1/2 right-4 md:right-6 transform -translate-y-1/2 flex items-center gap-4">
             <motion.a
+              layout
               href="#contact"
-              // Static padding, apply scale variants
               className="inline-flex h-10 items-center justify-center rounded-full border border-purple-200 bg-white px-6 text-sm font-medium text-purple-700 shadow-sm transition-colors hover:bg-purple-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-purple-600 overflow-hidden whitespace-nowrap"
-              style={{ transformOrigin: 'right center' }}
+              style={{ transformOrigin: 'right center', willChange: 'transform, width' }}
               variants={contactButtonVariants}
               animate={isShrunk ? 'shrunk' : 'initial'}
               initial="initial"
-              transition={{ duration: 0.4, ease: "easeInOut" }} // Match container transition
+              transition={{ duration: 0.4, ease: "easeInOut" }}
             >
-              {/* Reintroduce AnimatePresence with FAST content fade */}
-              <AnimatePresence initial={false}>
+              <AnimatePresence initial={false} mode="popLayout">
                 {isShrunk ? (
                   <motion.span
                     key="icon-phone"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.1 }} // Fast fade
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
                   >
                     <Phone className="h-5 w-5 flex-shrink-0" />
                   </motion.span>
@@ -187,7 +202,8 @@ export default function Home() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.1 }} // Fast fade
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                    style={{ maxWidth: '100%', overflow: 'hidden' }}
                   >
                     Contact Us
                   </motion.span>
@@ -195,25 +211,25 @@ export default function Home() {
               </AnimatePresence>
             </motion.a>
             <motion.a
+              layout
               href="https://auctions.reyderenterprises.com"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex h-10 items-center justify-center rounded-full bg-purple-600 px-6 text-sm font-medium text-white shadow-sm transition-colors hover:bg-purple-700 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-purple-700 overflow-hidden whitespace-nowrap"
-              style={{ transformOrigin: 'right center' }}
+              style={{ transformOrigin: 'right center', willChange: 'transform, width' }}
               variants={auctionButtonVariants}
               animate={isShrunk ? 'shrunk' : 'initial'}
               initial="initial"
-              transition={{ duration: 0.4, ease: "easeInOut" }} // Match container transition
+              transition={{ duration: 0.4, ease: "easeInOut" }}
             >
-              {/* Reintroduce AnimatePresence with FAST content fade */}
-              <AnimatePresence initial={false}>
+              <AnimatePresence initial={false} mode="popLayout">
                 {isShrunk ? (
                   <motion.span
                     key="icon-bag"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.1 }} // Fast fade
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
                   >
                     <ShoppingBag className="h-5 w-5 flex-shrink-0" />
                   </motion.span>
@@ -223,7 +239,8 @@ export default function Home() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.1 }} // Fast fade
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                    style={{ maxWidth: '100%', overflow: 'hidden' }}
                   >
                     Visit Auctions Platform
                   </motion.span>
