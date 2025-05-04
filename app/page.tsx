@@ -268,7 +268,7 @@ export default function Home() {
               className="max-w-3xl mx-auto text-center space-y-8"
             >
               <h1 className="text-4xl font-bold tracking-tighter text-white sm:text-5xl xl:text-6xl/none">
-                Elevate Your Inventory with{" "}
+                Upgrade Your Inventory with{" "}
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-green-500">
                   Premium Devices
                 </span>
@@ -953,23 +953,36 @@ export default function Home() {
               </p>
             </motion.div>
           </div>
-          <div className="mx-auto max-w-md text-center">
-            {/* Placeholder for WhatsApp Contact */}
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4 text-purple-700">Contact vi WhatsApp</h3>
+          {/* Updated container to hold both contact boxes */}
+          <div className="mx-auto max-w-4xl text-center flex flex-col md:flex-row gap-8 justify-center">
+            {/* WhatsApp Contact Box */}
+            <div className="bg-white p-6 rounded-lg shadow-md flex-1">
+              <h3 className="text-xl font-semibold mb-4 text-purple-700">Contact us on WhatsApp</h3>
               <p className="text-gray-600 mb-4">
-                Click the button below or scan the QR code to start a chat with us on WhatsApp.
+                Click the button below to start a chat with us on WhatsApp.
               </p>
-              {/* Add WhatsApp button/link here */}
-              <BrandButton 
+              <BrandButton
                 href="#" // Replace with actual WhatsApp link
                 variant="green"
                 size="lg"
               >
                 Chat on WhatsApp
               </BrandButton>
-              {/* Add WhatsApp QR code image here if desired */}
-              {/* <Image src="/whatsapp-qr.png" width={150} height={150} alt="WhatsApp QR Code" className="mx-auto mt-4" /> */}
+            </div>
+
+            {/* New Email Contact Box */}
+            <div className="bg-white p-6 rounded-lg shadow-md flex-1">
+              <h3 className="text-xl font-semibold mb-4 text-purple-700">Send us an Email</h3>
+              <p className="text-gray-600 mb-4">
+                Click the button below to send us an email.
+              </p>
+              <BrandButton
+                href="mailto:sales@reyderenterprises.com"
+                variant="green"
+                size="lg"
+              >
+                Send Email
+              </BrandButton>
             </div>
           </div>
         </div>
