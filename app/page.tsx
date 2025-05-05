@@ -242,7 +242,7 @@ export default function Home() {
                     transition={{ duration: 0.4, ease: "easeInOut" }}
                     style={{ maxWidth: '100%', overflow: 'hidden' }}
                   >
-                    Visit Auctions Platform
+                    Become a Buyer
                   </motion.span>
                 )}
               </AnimatePresence>
@@ -274,14 +274,14 @@ export default function Home() {
               className="max-w-3xl mx-auto text-center space-y-8"
             >
               <h1 className="text-4xl font-bold tracking-tighter text-white sm:text-5xl xl:text-6xl/none">
-                Elevate Your Inventory with{" "}
+                Upgrade Your Inventory with{" "}
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-green-500">
                   Premium Devices
                 </span>
               </h1>
               <p className="max-w-[800px] mx-auto text-white/90 text-lg md:text-xl">
-                Access high-quality mobile devices through our exclusive auctions platform. Join industry professionals
-                sourcing the best wholesale inventory.
+              Reyder Enterprises offers Daily Access to Premium Mobile Inventory.
+              Join top resellers in exclusive auctions built for speed, profit, and serious volume.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
                 <BrandButton
@@ -292,7 +292,7 @@ export default function Home() {
                   size="lg"
                   icon
                 >
-                  Join Our Auctions
+                  Create an Account
                 </BrandButton>
                 <Link
                   href="#contact"
@@ -970,29 +970,35 @@ export default function Home() {
               </p>
             </motion.div>
           </div>
-          <div className="mx-auto max-w-md text-center">
-            {/* Placeholder for WhatsApp Contact */}
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4 text-[#5A2964]">Contact via WhatsApp</h3> {/* Update heading color */}
-              <p className="text-[#222222] mb-4"> {/* Update text color */}
-                Click the button below or scan the QR code to start a chat with us on WhatsApp.
+          {/* Updated container to hold both contact boxes */}
+          <div className="mx-auto max-w-4xl text-center flex flex-col md:flex-row gap-8 justify-center">
+            {/* WhatsApp Contact Box */}
+            <div className="bg-white p-6 rounded-lg shadow-md flex-1">
+              <h3 className="text-xl font-semibold mb-4 text-purple-700">Contact us on WhatsApp</h3>
+              <p className="text-gray-600 mb-4">
+                Click the button below to start a chat with us on WhatsApp.
               </p>
-              {/* Add WhatsApp button/link here */}
-              <a
+              <BrandButton
                 href="#" // Replace with actual WhatsApp link
                 className="inline-flex h-12 items-center justify-center rounded-full bg-[#6BAD23] px-8 text-sm font-medium text-white shadow-lg transition-colors hover:bg-[#4B7918] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4B7918]" // Apply CTA-PRIMARY style
               >
                 Chat on WhatsApp
-              </a>
-              {/* <BrandButton 
-                href="#" // Replace with actual WhatsApp link
-                variant="green" // Keep using BrandButton if preferred
+              </BrandButton>
+            </div>
+
+            {/* New Email Contact Box */}
+            <div className="bg-white p-6 rounded-lg shadow-md flex-1">
+              <h3 className="text-xl font-semibold mb-4 text-purple-700">Send us an Email</h3>
+              <p className="text-gray-600 mb-4">
+                Click the button below to send us an email.
+              </p>
+              <BrandButton
+                href="mailto:sales@reyderenterprises.com"
+                variant="green"
                 size="lg"
               >
-                Chat on WhatsApp
-              </BrandButton> */}
-              {/* Add WhatsApp QR code image here if desired */}
-              {/* <Image src="/whatsapp-qr.png" width={150} height={150} alt="WhatsApp QR Code" className="mx-auto mt-4" /> */}
+                Send Email
+              </BrandButton>
             </div>
           </div>
         </div>
