@@ -787,7 +787,7 @@ export default function Home() {
         {/* Shipping Section */}
         <section id="shipping" ref={shippingRef} className="relative w-full py-20 md:py-32 bg-[#712f79] isolate z-5"> {/* Changed to #712f79 */}
           {/* Background Image - Working Version with Lower z-index */}
-          <div className="absolute inset-0 z-10 bg-[url('/27.png')] bg-no-repeat bg-bottom bg-[size:75%_79%]"></div>
+          <div className="absolute inset-0 z-10 bg-[url('/27.png')] bg-no-repeat bg-bottom bg-[size:75%_77%]"></div>
           
           <div className="container px-4 md:px-6 relative z-20"> {/* Lower z-index, still above background */}
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
