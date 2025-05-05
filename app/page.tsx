@@ -69,7 +69,7 @@ export default function Home() {
       borderRadius: '999px',
       paddingTop: '0.5rem',
       paddingBottom: '0.5rem',
-      backgroundColor: 'rgba(255, 255, 255, 0.95)',
+      backgroundColor: 'rgba(247, 250, 249, 0.95)',
       borderColor: 'rgba(229, 231, 235, 0)',
       borderBottomWidth: '0px',
     }
@@ -125,10 +125,10 @@ export default function Home() {
   }, [])
 
   // Define the mask style string once
-  const maskStyle = 'linear-gradient(135deg, black calc(var(--mask-gradient-stop) - 5%), transparent calc(var(--mask-gradient-stop) + 5%))';
+  // const maskStyle = 'linear-gradient(135deg, black calc(var(--mask-gradient-stop) - 5%), transparent calc(var(--mask-gradient-stop) + 5%))'; // Mask not currently used
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-[#F7FAF9] text-[#222222]"> {/* Apply base background and text color */}
       {/* Outer header: Apply header variants and remove top-0 */}
       <motion.header
         className="sticky z-50 w-full"
@@ -159,16 +159,16 @@ export default function Home() {
 
           {/* Nav: Apply absolute positioning unconditionally for centering */}
           <nav className="hidden md:flex gap-6 absolute left-1/2 transform -translate-x-1/2">
-            <Link href="#about" className="text-sm font-medium hover:text-purple-700 transition-colors">
+            <Link href="#about" className="text-sm font-medium text-[#222222] hover:text-[#2F7971] transition-colors"> {/* Update link hover color */}
               About
             </Link>
-            <Link href="#process" className="text-sm font-medium hover:text-purple-700 transition-colors">
+            <Link href="#process" className="text-sm font-medium text-[#222222] hover:text-[#2F7971] transition-colors"> {/* Update link hover color */}
               Our Process
             </Link>
-            <Link href="#grading" className="text-sm font-medium hover:text-purple-700 transition-colors">
+            <Link href="#grading" className="text-sm font-medium text-[#222222] hover:text-[#2F7971] transition-colors"> {/* Update link hover color */}
               Grading System
             </Link>
-            <Link href="#shipping" className="text-sm font-medium hover:text-purple-700 transition-colors">
+            <Link href="#shipping" className="text-sm font-medium text-[#222222] hover:text-[#2F7971] transition-colors"> {/* Update link hover color */}
               Shipping
             </Link>
           </nav>
@@ -178,7 +178,7 @@ export default function Home() {
             <motion.a
               layout
               href="#contact"
-              className="inline-flex h-10 items-center justify-center rounded-full border border-purple-200 bg-white px-6 text-sm font-medium text-purple-700 shadow-sm transition-colors hover:bg-purple-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-purple-600 overflow-hidden whitespace-nowrap"
+              className="inline-flex h-10 items-center justify-center rounded-full border-2 border-[#712F79] bg-transparent px-6 text-sm font-medium text-[#712F79] shadow-sm transition-colors hover:bg-[#712F79] hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#5A2964] overflow-hidden whitespace-nowrap" // Apply CTA-SECONDARY style
               style={{ transformOrigin: 'right center', willChange: 'transform, width' }}
               variants={contactButtonVariants}
               animate={isShrunk ? 'shrunk' : 'initial'}
@@ -194,7 +194,7 @@ export default function Home() {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.4, ease: "easeInOut" }}
                   >
-                    <Phone className="h-5 w-5 flex-shrink-0" />
+                    <Phone className="h-5 w-5 flex-shrink-0" /> {/* Icon color inherits from text-[#712F79] / hover:text-white */}
                   </motion.span>
                 ) : (
                   <motion.span
@@ -215,7 +215,7 @@ export default function Home() {
               href="https://auctions.reyderenterprises.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-10 items-center justify-center rounded-full bg-purple-600 px-6 text-sm font-medium text-white shadow-sm transition-colors hover:bg-purple-700 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-purple-700 overflow-hidden whitespace-nowrap"
+              className="inline-flex h-10 items-center justify-center rounded-full bg-[#6BAD23] px-6 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#4B7918] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#4B7918] overflow-hidden whitespace-nowrap" // Apply CTA-PRIMARY style
               style={{ transformOrigin: 'right center', willChange: 'transform, width' }}
               variants={auctionButtonVariants}
               animate={isShrunk ? 'shrunk' : 'initial'}
@@ -231,7 +231,7 @@ export default function Home() {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.4, ease: "easeInOut" }}
                   >
-                    <ShoppingBag className="h-5 w-5 flex-shrink-0" />
+                    <ShoppingBag className="h-5 w-5 flex-shrink-0" /> {/* Icon color is white */}
                   </motion.span>
                 ) : (
                   <motion.span
@@ -254,10 +254,16 @@ export default function Home() {
         {/* Hero Section with Video Background - Removed ref */}
         <section className="relative w-full min-h-[80vh] flex items-center overflow-hidden">
           {/* Fallback background - will show while video loads or if video fails */}
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-800 via-purple-700 to-purple-900"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-800 via-purple-700 to-purple-900"></div> {/* Keep dark gradient for hero */}
 
           {/* Video background - using the correct filename */}
           <VideoBackground src="/hero.webm" />
+
+          {/* Glass Blur Overlay (Reverted) */}
+          <div 
+            className="absolute inset-0 bg-gradient-to-b from-black/35 to-black/60 backdrop-blur-[1px] backdrop-brightness-90" // Reverted to simple gradient and blur
+            // Removed inline styles for SVG noise and blend mode
+          ></div>
 
           {/* Hero content */}
           <div className="container relative z-30 px-4 md:px-6 py-12 md:py-24 lg:py-32">
@@ -290,7 +296,7 @@ export default function Home() {
                 </BrandButton>
                 <Link
                   href="#contact"
-                  className="inline-flex h-12 items-center justify-center rounded-full border border-white/30 bg-white/10 px-8 text-sm font-medium text-white shadow-lg backdrop-blur-md transition-all hover:bg-white/20 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+                  className="inline-flex h-12 items-center justify-center rounded-full border-2 border-[#712F79] bg-transparent px-8 text-sm font-medium text-[#712F79] shadow-lg backdrop-blur-md transition-all hover:bg-[#712F79] hover:text-white hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5A2964]" // Apply CTA-SECONDARY style
                 >
                   Contact Us
                 </Link>
@@ -300,7 +306,7 @@ export default function Home() {
         </section>
 
         {/* Stats Section */}
-        <section className="w-full py-12 bg-white">
+        <section className="w-full py-12">
           {/* Apply transform to shift container up 5px */}
           <div className="container px-4 md:px-6" style={{ transform: 'translateY(-12px)' }}>
             {/* Wrap the grid in a motion.div to detect when it enters viewport */}
@@ -354,10 +360,10 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: 0.1 }}
                 className="flex flex-col items-center text-center"
               >
-                <div className="text-3xl md:text-4xl font-bold text-purple-600">
+                <div className="text-3xl md:text-4xl font-bold text-[#5A2964]"> {/* Update heading color */}
                   {displayedStatsValues.devices.toLocaleString()}
                 </div>
-                <p className="text-sm text-gray-500 mt-1">Devices Processed</p>
+                <p className="text-sm text-[#222222] mt-1">Devices Processed</p> {/* Update text color */}
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -366,10 +372,10 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="flex flex-col items-center text-center"
               >
-                <div className="text-3xl md:text-4xl font-bold text-purple-600">
+                <div className="text-3xl md:text-4xl font-bold text-[#5A2964]"> {/* Update heading color */}
                   {displayedStatsValues.partners}+
                 </div>
-                <p className="text-sm text-gray-500 mt-1">Business Partners</p>
+                <p className="text-sm text-[#222222] mt-1">Business Partners</p> {/* Update text color */}
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -378,10 +384,10 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="flex flex-col items-center text-center"
               >
-                <div className="text-3xl md:text-4xl font-bold text-purple-600">
+                <div className="text-3xl md:text-4xl font-bold text-[#5A2964]"> {/* Update heading color */}
                   {displayedStatsValues.years}+
                 </div>
-                <p className="text-sm text-gray-500 mt-1">Years in Business</p>
+                <p className="text-sm text-[#222222] mt-1">Years in Business</p> {/* Update text color */}
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -390,10 +396,10 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: 0.4 }}
                 className="flex flex-col items-center text-center"
               >
-                <div className="text-3xl md:text-4xl font-bold text-purple-600">
+                <div className="text-3xl md:text-4xl font-bold text-[#5A2964]"> {/* Update heading color */}
                   {displayedStatsValues.countries}+
                 </div>
-                <p className="text-sm text-gray-500 mt-1">Countries Served</p>
+                <p className="text-sm text-[#222222] mt-1">Countries Served</p> {/* Update text color */}
               </motion.div>
             </motion.div>
           </div>
@@ -401,12 +407,15 @@ export default function Home() {
 
         {/* Divider */}
         <div className="container px-4 md:px-6">
-          <hr className="my-12 border-t border-purple-300" />
+          <hr className="my-12 border-t border-purple-300" /> {/* Keep divider color or adjust if needed, e.g., border-[#AA82AF]/50 */}
         </div>
 
         {/* About Section */}
-        <section id="about" className="w-full py-20 md:py-32">
-          <div className="container px-4 md:px-6">
+        <section 
+          id="about" 
+          className="relative w-full py-20 md:py-32 overflow-visible before:content-[''] before:absolute before:inset-x-0 before:-top-32 before:-bottom-32 before:-z-10 before:bg-[radial-gradient(circle_at_50%_40%,#AA82AF_0%,#E8DFF1_35%,#DDF2CC_100%)]" // Update BG-GRADIENT
+        >
+          <div className="container relative z-10 px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -415,10 +424,10 @@ export default function Home() {
                 transition={{ duration: 0.5 }}
                 className="space-y-2"
               >
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-purple-600">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-[#5A2964]"> {/* Update heading color */}
                   About Reyder Enterprises
                 </h2>
-                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                <p className="max-w-[900px] text-[#222222] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed"> {/* Update text color */}
                   Reyder Enterprises is a leading mobile device wholesale company providing high-quality devices to
                   businesses worldwide. Our exclusive auctions platform connects you with premium inventory at
                   competitive prices.
@@ -434,35 +443,35 @@ export default function Home() {
                 className="flex flex-col justify-center space-y-6"
               >
                 <div className="flex items-start gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 to-purple-700 text-white shadow-lg">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 to-purple-700 text-white shadow-lg"> {/* Keep icon bg for now or use #5A2964 */}
                     <Phone className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold">Premium Inventory</h3>
-                    <p className="text-gray-500 mt-2">
+                    <h3 className="text-xl font-bold text-[#5A2964]">Premium Inventory</h3> {/* Update heading color */}
+                    <p className="text-[#222222] mt-2"> {/* Update text color */}
                       Access a wide selection of thoroughly tested and graded mobile devices from leading manufacturers.
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg"> {/* Keep icon bg for now or use #6BAD23 */}
                     <Laptop className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold">Competitive Pricing</h3>
-                    <p className="text-gray-500 mt-2">
+                    <h3 className="text-xl font-bold text-[#5A2964]">Competitive Pricing</h3> {/* Update heading color */}
+                    <p className="text-[#222222] mt-2"> {/* Update text color */}
                       Our auction platform ensures fair market pricing for all inventory, helping you maximize your
                       margins.
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 to-purple-700 text-white shadow-lg">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 to-purple-700 text-white shadow-lg"> {/* Keep icon bg for now or use #5A2964 */}
                     <Tablet className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold">Trusted Partner</h3>
-                    <p className="text-gray-500 mt-2">
+                    <h3 className="text-xl font-bold text-[#5A2964]">Trusted Partner</h3> {/* Update heading color */}
+                    <p className="text-[#222222] mt-2"> {/* Update text color */}
                       Join hundreds of businesses who trust Reyder Enterprises for their inventory needs year after
                       year.
                     </p>
@@ -498,12 +507,12 @@ export default function Home() {
         </section>
 
         {/* Process Section - Static Timeline */}
-        <section id="process" className="w-full py-20 md:py-32 bg-gray-50 overflow-hidden">
+        <section id="process" className="w-full py-20 md:py-32 bg-[#F7FAF9] overflow-hidden"> {/* Update background */}
           <div className="container px-4 md:px-6">
             {/* Section Header */}
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16 md:mb-24">
-               <h2 className="text-4xl font-bold tracking-tight sm:text-5xl text-purple-800">Our Streamlined Process</h2>
-               <p className="max-w-[700px] mx-auto text-gray-600 md:text-xl/relaxed">
+               <h2 className="text-4xl font-bold tracking-tight sm:text-5xl text-[#5A2964]">Our Streamlined Process</h2> {/* Update heading color */}
+               <p className="max-w-[700px] mx-auto text-[#222222] md:text-xl/relaxed"> {/* Update text color */}
                  Follow our rigorous steps ensuring quality and security for every device.
                </p>
             </div>
@@ -532,8 +541,8 @@ export default function Home() {
                         alt="Secure data wiping"
                         className="rounded-lg w-full h-auto object-cover mb-4 shadow-sm"
                       />
-                      <h3 className="text-2xl font-semibold mb-2 text-purple-700 text-center md:text-left">1. Secure Data Wiping</h3>
-                      <p className="text-gray-600 text-center md:text-left">
+                      <h3 className="text-2xl font-semibold mb-2 text-[#5A2964] text-center md:text-left">1. Secure Data Wiping</h3> {/* Update heading color */}
+                      <p className="text-[#222222] text-center md:text-left"> {/* Update text color */}
                         All devices undergo certified, secure data wiping procedures to protect privacy and ensure compliance.
                       </p>
                     </div>
@@ -556,8 +565,8 @@ export default function Home() {
                         alt="Professional Cleaning"
                         className="rounded-lg w-full h-auto object-cover mb-4 shadow-sm"
                       />
-                      <h3 className="text-2xl font-semibold mb-2 text-purple-700 text-center md:text-left">2. Professional Cleaning</h3>
-                      <p className="text-gray-600 text-center md:text-left">
+                      <h3 className="text-2xl font-semibold mb-2 text-[#5A2964] text-center md:text-left">2. Professional Cleaning</h3> {/* Update heading color */}
+                      <p className="text-[#222222] text-center md:text-left"> {/* Update text color */}
                         Devices are meticulously cleaned and sanitized to meet high presentation standards.
                       </p>
                      </div>
@@ -580,8 +589,8 @@ export default function Home() {
                           alt="Comprehensive Testing"
                           className="rounded-lg w-full h-auto object-cover mb-4 shadow-sm"
                         />
-                        <h3 className="text-2xl font-semibold mb-2 text-purple-700 text-center md:text-left">3. Comprehensive Testing</h3>
-                        <p className="text-gray-600 text-center md:text-left">
+                        <h3 className="text-2xl font-semibold mb-2 text-[#5A2964] text-center md:text-left">3. Comprehensive Testing</h3> {/* Update heading color */}
+                        <p className="text-[#222222] text-center md:text-left"> {/* Update text color */}
                           Rigorous multi-point testing ensures full hardware and software functionality.
                         </p>
                      </div>
@@ -604,8 +613,8 @@ export default function Home() {
                           alt="Detailed Grading"
                           className="rounded-lg w-full h-auto object-cover mb-4 shadow-sm"
                         />
-                        <h3 className="text-2xl font-semibold mb-2 text-purple-700 text-center md:text-left">4. Detailed Grading</h3>
-                        <p className="text-gray-600 text-center md:text-left">
+                        <h3 className="text-2xl font-semibold mb-2 text-[#5A2964] text-center md:text-left">4. Detailed Grading</h3> {/* Update heading color */}
+                        <p className="text-[#222222] text-center md:text-left"> {/* Update text color */}
                            Expert technicians assign grades based on a transparent, detailed system.
                         </p>
                       </div>
@@ -617,12 +626,24 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Grading System - Reduced Top Padding */}
-        <section id="grading" ref={gradingSystemRef} className="w-full py-16 md:py-20 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-white"></div>
+        {/* Grading System Section with Purple Background Transition */}
+        <section 
+          id="grading" 
+          ref={gradingSystemRef} 
+          className="relative w-full py-16 md:py-20"
+          style={{
+            background: `linear-gradient(to bottom, #F7FAF9 0%, #F7FAF9 80%, transparent 100%)`,
+            marginBottom: "-50px", // Create overlap with next section
+            zIndex: 5,
+            position: "relative"
+          }}
+        >
+          {/* Decorative elements */}
           <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
           <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-          <div className="container relative px-4 md:px-6">
+          
+          {/* Content container */}
+          <div className="container relative z-10 px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -631,8 +652,8 @@ export default function Home() {
                 transition={{ duration: 0.5 }}
                 className="space-y-2"
               >
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-purple-600">Our Grading System</h2>
-                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-[#5A2964]">Our Grading System</h2>
+                <p className="max-w-[900px] text-[#222222] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   We use a comprehensive in-house grading system to ensure transparency and quality.
                 </p>
               </motion.div>
@@ -645,26 +666,26 @@ export default function Home() {
                   transition={{ duration: 0.5, delay: 0.1 }}
                   className="col-span-3 md:col-span-1"
                 >
-                  <div className="relative h-full overflow-hidden rounded-2xl bg-gradient-to-br from-purple-600 to-purple-700 p-6 text-white shadow-xl">
-                    <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-white/10"></div>
-                    <div className="absolute -bottom-8 -left-8 h-40 w-40 rounded-full bg-white/10"></div>
-                    <h3 className="text-2xl font-bold mb-4">Premium Grade</h3>
+                  <div className="relative h-full overflow-hidden rounded-2xl bg-[#E8DFF1] p-6 text-[#222222] shadow-xl border border-gray-200">
+                    <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-[#5A2964]/10"></div>
+                    <div className="absolute -bottom-8 -left-8 h-40 w-40 rounded-full bg-[#5A2964]/10"></div>
+                    <h3 className="text-2xl font-bold mb-4 text-[#5A2964]">Premium Grade</h3>
                     <p className="mb-6">Our highest quality devices with minimal to no signs of use.</p>
                     <div className="space-y-3">
                       <div className="flex items-center gap-2">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-purple-600 font-bold">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#5A2964] text-white font-bold">
                           A+
                         </div>
                         <span>Like new condition</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-purple-600 font-bold">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#5A2964] text-white font-bold">
                           A
                         </div>
                         <span>Excellent condition</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-purple-600 font-bold">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#5A2964] text-white font-bold">
                           A-
                         </div>
                         <span>Very good condition</span>
@@ -678,26 +699,26 @@ export default function Home() {
                   transition={{ duration: 0.5, delay: 0.3 }}
                   className="col-span-3 md:col-span-1"
                 >
-                  <div className="relative h-full overflow-hidden rounded-2xl bg-gradient-to-br from-green-500 to-green-600 p-6 text-white shadow-xl">
-                    <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-white/10"></div>
-                    <div className="absolute -bottom-8 -left-8 h-40 w-40 rounded-full bg-white/10"></div>
-                    <h3 className="text-2xl font-bold mb-4">Standard Grade</h3>
+                  <div className="relative h-full overflow-hidden rounded-2xl bg-[#E4F5D2] p-6 text-[#222222] shadow-xl border border-gray-200">
+                    <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-[#4B7918]/10"></div>
+                    <div className="absolute -bottom-8 -left-8 h-40 w-40 rounded-full bg-[#4B7918]/10"></div>
+                    <h3 className="text-2xl font-bold mb-4 text-[#5A2964]">Standard Grade</h3>
                     <p className="mb-6">Good quality devices with minor signs of use but fully functional.</p>
                     <div className="space-y-3">
                       <div className="flex items-center gap-2">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-green-500 font-bold">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#4B7918] text-white font-bold">
                           B+
                         </div>
                         <span>Good condition</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-green-500 font-bold">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#4B7918] text-white font-bold">
                           B
                         </div>
                         <span>Fair condition</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-green-500 font-bold">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#4B7918] text-white font-bold">
                           B-
                         </div>
                         <span>Acceptable condition</span>
@@ -711,26 +732,26 @@ export default function Home() {
                   transition={{ duration: 0.5, delay: 0.5 }}
                   className="col-span-3 md:col-span-1"
                 >
-                  <div className="relative h-full overflow-hidden rounded-2xl bg-gradient-to-br from-gray-600 to-gray-800 p-6 text-white shadow-xl">
-                    <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-white/10"></div>
-                    <div className="absolute -bottom-8 -left-8 h-40 w-40 rounded-full bg-white/10"></div>
-                    <h3 className="text-2xl font-bold mb-4">Economy Grade</h3>
+                  <div className="relative h-full overflow-hidden rounded-2xl bg-[#DDE9F0] p-6 text-[#222222] shadow-xl border border-gray-200">
+                    <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-[#5A2964]/10"></div>
+                    <div className="absolute -bottom-8 -left-8 h-40 w-40 rounded-full bg-[#5A2964]/10"></div>
+                    <h3 className="text-2xl font-bold mb-4 text-[#5A2964]">Economy Grade</h3>
                     <p className="mb-6">Functional devices with noticeable signs of use at lower price points.</p>
                     <div className="space-y-3">
                       <div className="flex items-center gap-2">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-700 font-bold">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#5A2964] text-white font-bold">
                           C+
                         </div>
                         <span>Moderate wear</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-700 font-bold">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#5A2964] text-white font-bold">
                           C
                         </div>
                         <span>Heavy wear</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-700 font-bold">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#5A2964] text-white font-bold">
                           C-
                         </div>
                         <span>Significant wear</span>
@@ -747,7 +768,7 @@ export default function Home() {
               >
                 <Link
                   href="#"
-                  className="inline-flex items-center justify-center rounded-full bg-purple-50 px-6 py-3 text-sm font-medium text-purple-700 transition-colors hover:bg-purple-200"
+                  className="inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-medium text-[#2F7971] transition-colors hover:underline underline-offset-4"
                 >
                   Learn more about our grading system
                   <ChevronRight className="ml-2 h-4 w-4" />
@@ -757,9 +778,18 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Purple background image as standalone layer between sections */}
+        <div 
+          className="w-full h-[280px] bg-[url('/purple.png')] bg-no-repeat bg-center bg-[size:180%_100%] relative z-10" 
+          style={{ marginTop: "-50px", marginBottom: "-120px" }}
+        ></div>
+
         {/* Shipping Section */}
-        <section id="shipping" ref={shippingRef} className="w-full py-20 md:py-32 bg-gray-50 overflow-hidden">
-          <div className="container px-4 md:px-6">
+        <section id="shipping" ref={shippingRef} className="relative w-full py-20 md:py-32 bg-[#712f79] isolate z-5"> {/* Changed to #712f79 */}
+          {/* Background Image - Working Version with Lower z-index */}
+          <div className="absolute inset-0 z-10 bg-[url('/27.png')] bg-no-repeat bg-bottom bg-[size:75%_79%]"></div>
+          
+          <div className="container px-4 md:px-6 relative z-20"> {/* Lower z-index, still above background */}
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -768,12 +798,9 @@ export default function Home() {
                 transition={{ duration: 0.5 }}
                 className="space-y-2"
               >
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-purple-600">
-                  Shipping Information
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-[#ffffff]"> 
+                  We Ship Everywhere.
                 </h2>
-                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  We offer convenient shipping options to meet your business needs.
-                </p>
               </motion.div>
             </div>
             <div className="mx-auto max-w-6xl">
@@ -782,45 +809,50 @@ export default function Home() {
                   initial={{ opacity: 0, x: -50 }}
                   animate={isShippingVisible ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.6, delay: 0.1 }}
-                  className="relative"
+                  className="relative overflow-visible"
                 >
                   <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-purple-600 to-purple-700 opacity-20 blur-lg"></div>
                   <div className="relative overflow-hidden rounded-2xl bg-white p-8 shadow-xl">
                     <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-purple-50"></div>
-                    <div className="relative">
+                    
+                    {/* Texture Background Image - Moved left from top-right */}
+                    <div className="absolute top-0 right-32 w-48 h-48 bg-[url('/50.png')] bg-cover bg-no-repeat opacity-100 mix-blend-multiply z-0"></div>
+
+                    {/* Content wrapper (needs to be relative to layer above background texture) */}
+                    <div className="relative z-10"> {/* Ensure this has relative and z-index > 0 */}
                       <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 to-purple-700 text-white shadow-lg mb-6">
                         <Truck className="h-8 w-8" />
                       </div>
-                      <h3 className="text-2xl font-bold mb-4">Domestic Shipping</h3>
-                      <p className="text-gray-600 mb-6">
-                        We offer <span className="font-bold text-green-500">FREE shipping</span> on all domestic orders
+                      <h3 className="text-2xl font-bold mb-4 text-[#5A2964]">Domestic Shipping</h3>
+                      <p className="text-[#222222] mb-6">
+                        We offer <span className="font-bold text-[#6BAD23]">FREE shipping</span> on all domestic orders
                         within the United States. Your devices will be carefully packaged and shipped with tracking
                         information provided.
                       </p>
                       <ul className="space-y-3">
                         <li className="flex items-center gap-3">
-                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-50 text-green-500">
+                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971]/10 text-[#2F7971]">
                             <Check className="h-4 w-4" />
                           </div>
-                          <span className="text-gray-700">Free shipping on all US orders</span>
+                          <span className="text-[#222222]">Free shipping on all US orders</span>
                         </li>
                         <li className="flex items-center gap-3">
-                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-50 text-green-500">
+                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971]/10 text-[#2F7971]">
                             <Check className="h-4 w-4" />
                           </div>
-                          <span className="text-gray-700">Secure packaging for safe delivery</span>
+                          <span className="text-[#222222]">Secure packaging for safe delivery</span>
                         </li>
                         <li className="flex items-center gap-3">
-                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-50 text-green-500">
+                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971]/10 text-[#2F7971]">
                             <Check className="h-4 w-4" />
                           </div>
-                          <span className="text-gray-700">Tracking information provided</span>
+                          <span className="text-[#222222]">Tracking information provided</span>
                         </li>
                         <li className="flex items-center gap-3">
-                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-50 text-green-500">
+                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971]/10 text-[#2F7971]">
                             <Check className="h-4 w-4" />
                           </div>
-                          <span className="text-gray-700">Fast processing times</span>
+                          <span className="text-[#222222]">Fast processing times</span>
                         </li>
                       </ul>
                     </div>
@@ -839,35 +871,35 @@ export default function Home() {
                       <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg mb-6">
                         <Globe className="h-8 w-8" />
                       </div>
-                      <h3 className="text-2xl font-bold mb-4">International Shipping</h3>
-                      <p className="text-gray-600 mb-6">
+                      <h3 className="text-2xl font-bold mb-4 text-[#5A2964]">International Shipping</h3>
+                      <p className="text-[#222222] mb-6">
                         We ship to businesses worldwide. International shipping rates are calculated based on
                         destination and order volume. Contact us for custom shipping quotes.
                       </p>
                       <ul className="space-y-3">
                         <li className="flex items-center gap-3">
-                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-50 text-green-500">
+                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971]/10 text-[#2F7971]">
                             <Check className="h-4 w-4" />
                           </div>
-                          <span className="text-gray-700">Worldwide shipping available</span>
+                          <span className="text-[#222222]">Worldwide shipping available</span>
                         </li>
                         <li className="flex items-center gap-3">
-                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-50 text-green-500">
+                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971]/10 text-[#2F7971]">
                             <Check className="h-4 w-4" />
                           </div>
-                          <span className="text-gray-700">Customs documentation assistance</span>
+                          <span className="text-[#222222]">Customs documentation assistance</span>
                         </li>
                         <li className="flex items-center gap-3">
-                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-50 text-green-500">
+                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971]/10 text-[#2F7971]">
                             <Check className="h-4 w-4" />
                           </div>
-                          <span className="text-gray-700">Volume discounts available</span>
+                          <span className="text-[#222222]">Volume discounts available</span>
                         </li>
                         <li className="flex items-center gap-3">
-                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-50 text-green-500">
+                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971]/10 text-[#2F7971]">
                             <Check className="h-4 w-4" />
                           </div>
-                          <span className="text-gray-700">International tracking provided</span>
+                          <span className="text-[#222222]">International tracking provided</span>
                         </li>
                       </ul>
                     </div>
@@ -878,26 +910,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="w-full py-20 md:py-32 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-700 via-purple-600 to-purple-700">
-            <div className="absolute inset-0 opacity-20">
-              <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <defs>
-                  <radialGradient id="radialGradient2" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-                    <stop offset="0%" stopColor="white" stopOpacity="0.3" />
-                    <stop offset="100%" stopColor="white" stopOpacity="0" />
-                  </radialGradient>
-                </defs>
-                <circle cx="20" cy="20" r="25" fill="url(#radialGradient2)" />
-                <circle cx="80" cy="80" r="35" fill="url(#radialGradient2)" />
-              </svg>
-            </div>
-          </div>
-          <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
-            <div className="absolute -top-24 -left-24 w-96 h-96 bg-green-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-            <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-          </div>
+        {/* CTA Section - High padding, relative, z-10 */}
+        <section 
+          className="w-full py-48 md:py-64 relative bg-[#712f79] z-10" 
+          style={{ backgroundImage: 'radial-gradient(circle at center, #5A2964 0%, #712f79 70%)' }}
+        >
           <div className="container relative px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <motion.div
@@ -934,8 +951,8 @@ export default function Home() {
           </div>
         </section>
       </main>
-      {/* Added Contact Section */} 
-      <section id="contact" className="w-full py-20 md:py-32 bg-gray-100">
+      {/* Contact Section - Added relative positioning, removed extra top padding, default z-index */}
+      <section id="contact" className="w-full py-20 md:py-32 bg-[#F7FAF9] relative"> {/* Added relative, removed pt-40/pt-56 */}
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
             <motion.div
@@ -945,10 +962,10 @@ export default function Home() {
               transition={{ duration: 0.5 }}
               className="space-y-2"
             >
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-purple-600">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-[#5A2964]"> {/* Update heading color */}
                 Get In Touch
               </h2>
-              <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              <p className="max-w-[900px] text-[#222222] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed"> {/* Update text color */}
                 Have questions or ready to get started? Contact us today!
               </p>
             </motion.div>
@@ -956,18 +973,24 @@ export default function Home() {
           <div className="mx-auto max-w-md text-center">
             {/* Placeholder for WhatsApp Contact */}
             <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4 text-purple-700">Contact via WhatsApp</h3>
-              <p className="text-gray-600 mb-4">
+              <h3 className="text-xl font-semibold mb-4 text-[#5A2964]">Contact via WhatsApp</h3> {/* Update heading color */}
+              <p className="text-[#222222] mb-4"> {/* Update text color */}
                 Click the button below or scan the QR code to start a chat with us on WhatsApp.
               </p>
               {/* Add WhatsApp button/link here */}
-              <BrandButton 
+              <a
                 href="#" // Replace with actual WhatsApp link
-                variant="green"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-[#6BAD23] px-8 text-sm font-medium text-white shadow-lg transition-colors hover:bg-[#4B7918] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4B7918]" // Apply CTA-PRIMARY style
+              >
+                Chat on WhatsApp
+              </a>
+              {/* <BrandButton 
+                href="#" // Replace with actual WhatsApp link
+                variant="green" // Keep using BrandButton if preferred
                 size="lg"
               >
                 Chat on WhatsApp
-              </BrandButton>
+              </BrandButton> */}
               {/* Add WhatsApp QR code image here if desired */}
               {/* <Image src="/whatsapp-qr.png" width={150} height={150} alt="WhatsApp QR Code" className="mx-auto mt-4" /> */}
             </div>
@@ -978,18 +1001,18 @@ export default function Home() {
         <div className="container flex flex-col items-center justify-center gap-4 px-4 md:px-6 md:flex-row md:justify-between">
           <div className="flex items-center gap-2">
             <Logo size="small" />
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-[#222222]"> {/* Update text color */}
               © {new Date().getFullYear()} Reyder Enterprises. All rights reserved.
             </p>
           </div>
           <nav className="flex gap-4 sm:gap-6">
-            <Link href="#" className="text-sm hover:underline underline-offset-4">
+            <Link href="#" className="text-sm text-[#2F7971] hover:underline underline-offset-4"> {/* Apply LINK/ACCENT color */}
               Terms
             </Link>
-            <Link href="#" className="text-sm hover:underline underline-offset-4">
+            <Link href="#" className="text-sm text-[#2F7971] hover:underline underline-offset-4"> {/* Apply LINK/ACCENT color */}
               Privacy
             </Link>
-            <Link href="#" className="text-sm hover:underline underline-offset-4">
+            <Link href="#contact" className="text-sm text-[#2F7971] hover:underline underline-offset-4"> {/* Apply LINK/ACCENT color */}
               Contact
             </Link>
           </nav>
