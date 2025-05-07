@@ -868,43 +868,48 @@ export default function Home() {
                     transition={{ duration: 0.6, delay: 0.1 }}
                     className="relative overflow-visible"
                   >
-                    <div className="relative overflow-hidden rounded-2xl p-8 bg-[url('/95.jpg')] bg-cover bg-center bg-no-repeat">
+                    <div className="relative overflow-hidden rounded-2xl p-8">
+                      <div className="absolute inset-0 bg-[url('/95.jpg')] bg-cover bg-center bg-no-repeat -scale-x-100" aria-hidden="true"></div>
                       <div className="relative z-10">
                         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 to-purple-700 text-white shadow-lg mb-6">
                           <Truck className="h-8 w-8" />
                         </div>
-                        <h3 className="text-2xl font-bold mb-4 text-[#5A2964]">Domestic Shipping</h3>
-                        <p className="text-[#222222] mb-6">
-                          We offer <span className="font-bold text-[#6BAD23]">FREE shipping</span> on all domestic orders
-                          within the United States. Your devices will be carefully packaged and shipped with tracking
-                          information provided.
-                        </p>
-                        <ul className="space-y-3">
-                          <li className="flex items-center gap-3">
-                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971]/10 text-[#2F7971]">
-                              <Check className="h-4 w-4" />
-                            </div>
-                            <span className="text-[#222222]">Free shipping on all US orders</span>
-                          </li>
-                          <li className="flex items-center gap-3">
-                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971]/10 text-[#2F7971]">
-                              <Check className="h-4 w-4" />
-                            </div>
-                            <span className="text-[#222222]">Secure packaging for safe delivery</span>
-                          </li>
-                          <li className="flex items-center gap-3">
-                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971]/10 text-[#2F7971]">
-                              <Check className="h-4 w-4" />
-                            </div>
-                            <span className="text-[#222222]">Tracking information provided</span>
-                          </li>
-                          <li className="flex items-center gap-3">
-                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971]/10 text-[#2F7971]">
-                              <Check className="h-4 w-4" />
-                            </div>
-                            <span className="text-[#222222]">Fast processing times</span>
-                          </li>
-                        </ul>
+                        <div className="inline-block bg-slate-100 rounded-full px-4 py-1 mb-4">
+                          <h3 className="text-2xl font-bold text-[#5A2964]">Domestic Shipping</h3>
+                        </div>
+                        <div className="bg-black/25 rounded-md p-3">
+                          <p className="text-slate-100 mb-4">
+                            We offer <span className="font-bold text-green-300">FREE shipping</span> on all domestic orders
+                            within the United States. Your devices will be carefully packaged and shipped with tracking
+                            information provided.
+                          </p>
+                          <ul className="space-y-3">
+                            <li className="flex items-center gap-3">
+                              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971] text-white">
+                                <Check className="h-4 w-4" />
+                              </div>
+                              <span className="text-slate-200">Free shipping on all US orders</span>
+                            </li>
+                            <li className="flex items-center gap-3">
+                              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971] text-white">
+                                <Check className="h-4 w-4" />
+                              </div>
+                              <span className="text-slate-200">Secure packaging for safe delivery</span>
+                            </li>
+                            <li className="flex items-center gap-3">
+                              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971] text-white">
+                                <Check className="h-4 w-4" />
+                              </div>
+                              <span className="text-slate-200">Tracking information provided</span>
+                            </li>
+                            <li className="flex items-center gap-3">
+                              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971] text-white">
+                                <Check className="h-4 w-4" />
+                              </div>
+                              <span className="text-slate-200">Fast processing times</span>
+                            </li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </motion.div>
@@ -914,42 +919,46 @@ export default function Home() {
                     transition={{ duration: 0.6, delay: 0.3 }}
                     className="relative"
                   >
-                    <div className="relative overflow-hidden rounded-2xl p-8 bg-[url('/97.jpg')] bg-cover bg-center bg-no-repeat">
+                    <div className="relative overflow-hidden rounded-2xl p-8 bg-[url('/12.png')] bg-cover bg-center bg-no-repeat">
                       <div className="relative">
                         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg mb-6">
                           <Globe className="h-8 w-8" />
                         </div>
-                        <h3 className="text-2xl font-bold mb-4 text-[#5A2964]">International Shipping</h3>
-                        <p className="text-[#222222] mb-6">
-                          We ship to businesses worldwide. International shipping rates are calculated based on
-                          destination and order volume. Contact us for custom shipping quotes.
-                        </p>
-                        <ul className="space-y-3">
-                          <li className="flex items-center gap-3">
-                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971]/10 text-[#2F7971]">
-                              <Check className="h-4 w-4" />
-                            </div>
-                            <span className="text-[#222222]">Worldwide shipping available</span>
-                          </li>
-                          <li className="flex items-center gap-3">
-                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971]/10 text-[#2F7971]">
-                              <Check className="h-4 w-4" />
-                            </div>
-                            <span className="text-[#222222]">Customs documentation assistance</span>
-                          </li>
-                          <li className="flex items-center gap-3">
-                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971]/10 text-[#2F7971]">
-                              <Check className="h-4 w-4" />
-                            </div>
-                            <span className="text-[#222222]">Volume discounts available</span>
-                          </li>
-                          <li className="flex items-center gap-3">
-                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971]/10 text-[#2F7971]">
-                              <Check className="h-4 w-4" />
-                            </div>
-                            <span className="text-[#222222]">International tracking provided</span>
-                          </li>
-                        </ul>
+                        <div className="inline-block bg-slate-100 rounded-full px-4 py-1 mb-4">
+                          <h3 className="text-2xl font-bold text-[#5A2964]">International Shipping</h3>
+                        </div>
+                        <div className="bg-black/25 rounded-md p-3">
+                          <p className="text-slate-100 mb-4">
+                            We ship to businesses worldwide. International shipping rates are calculated based on
+                            destination and order volume. Contact us for custom shipping quotes.
+                          </p>
+                          <ul className="space-y-3">
+                            <li className="flex items-center gap-3">
+                              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971] text-white">
+                                <Check className="h-4 w-4" />
+                              </div>
+                              <span className="text-slate-200">Worldwide shipping available</span>
+                            </li>
+                            <li className="flex items-center gap-3">
+                              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971] text-white">
+                                <Check className="h-4 w-4" />
+                              </div>
+                              <span className="text-slate-200">Customs documentation assistance</span>
+                            </li>
+                            <li className="flex items-center gap-3">
+                              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971] text-white">
+                                <Check className="h-4 w-4" />
+                              </div>
+                              <span className="text-slate-200">Volume discounts available</span>
+                            </li>
+                            <li className="flex items-center gap-3">
+                              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971] text-white">
+                                <Check className="h-4 w-4" />
+                              </div>
+                              <span className="text-slate-200">International tracking provided</span>
+                            </li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </motion.div>
