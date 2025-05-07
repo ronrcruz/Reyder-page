@@ -337,7 +337,7 @@ export default function Home() {
         </motion.header>
         <main className="flex-1">
           <section className="relative w-full min-h-[80vh] flex items-center overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-800 via-purple-700 to-purple-900"></div>
+            {/* <div className="absolute inset-0 bg-gradient-to-br from-purple-800 via-purple-700 to-purple-900"></div> */}
 
             <VideoBackground src="/hero.webm" />
 
@@ -959,9 +959,8 @@ export default function Home() {
             </div>
           </section>
 
-          <section 
-            className="w-full py-48 md:py-64 relative bg-[#712f79] z-10" 
-            style={{ backgroundImage: 'radial-gradient(circle at center, #5A2964 0%, #712f79 70%)' }}
+          <section
+            className="w-full py-48 md:py-64 relative z-10 bg-[url('/purple.png')] bg-[center_top_-12rem] bg-[length:170%_60%] bg-no-repeat"
           >
             <div className="container relative px-4 md:px-6">
               <div className="flex flex-col items-center justify-center space-y-4 text-center">
@@ -972,10 +971,10 @@ export default function Home() {
                   transition={{ duration: 0.5 }}
                   className="space-y-4"
                 >
-                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-white">
+                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-[#5A2964]">
                     Ready to Access Premium Mobile Devices?
                   </h2>
-                  <p className="max-w-[900px] text-white/80 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                  <p className="max-w-[900px] text-[#222222] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                     Join our auctions platform today and discover high-quality mobile devices at competitive wholesale
                     prices.
                   </p>
@@ -990,7 +989,7 @@ export default function Home() {
                     >
                       Sign Up For Auctions
                     </BrandButton>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-gray-600">
                       Join hundreds of businesses already sourcing from Reyder Enterprises.
                     </p>
                   </div>
