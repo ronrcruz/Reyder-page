@@ -838,8 +838,14 @@ export default function Home() {
           ></div>
 
           <section id="shipping" ref={shippingRef} className="relative w-full py-20 md:py-32 bg-[#712f79] isolate z-5">
-            <div className="absolute inset-0 z-10 bg-[url('/27.png')] bg-no-repeat bg-bottom bg-[size:75%_77%]"></div>
-            
+            <div
+              className="absolute top-[-20px] left-[-30px] w-[200px] h-[200px] z-10 bg-[url('/50.png')] bg-contain bg-center bg-no-repeat opacity-30 transform -rotate-15"
+              aria-hidden="true"
+            ></div>
+            <div
+              className="absolute bottom-[-20px] right-[-40px] w-[250px] h-[250px] z-10 bg-[url('/27.png')] bg-contain bg-center bg-no-repeat opacity-30 transform rotate-10"
+              aria-hidden="true"
+            ></div>
             <div className="container px-4 md:px-6 relative z-20">
               <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
                 <motion.div
@@ -862,12 +868,7 @@ export default function Home() {
                     transition={{ duration: 0.6, delay: 0.1 }}
                     className="relative overflow-visible"
                   >
-                    <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-purple-600 to-purple-700 opacity-20 blur-lg"></div>
-                    <div className="relative overflow-hidden rounded-2xl bg-white p-8 shadow-xl">
-                      <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-purple-50"></div>
-                      
-                      <div className="absolute top-0 right-32 w-48 h-48 bg-[url('/50.png')] bg-cover bg-no-repeat opacity-100 mix-blend-multiply z-0"></div>
-
+                    <div className="relative overflow-hidden rounded-2xl p-8 bg-[url('/95.jpg')] bg-cover bg-center bg-no-repeat">
                       <div className="relative z-10">
                         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 to-purple-700 text-white shadow-lg mb-6">
                           <Truck className="h-8 w-8" />
@@ -913,9 +914,7 @@ export default function Home() {
                     transition={{ duration: 0.6, delay: 0.3 }}
                     className="relative"
                   >
-                    <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-green-500 to-green-600 opacity-20 blur-lg"></div>
-                    <div className="relative overflow-hidden rounded-2xl bg-white p-8 shadow-xl">
-                      <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-green-50"></div>
+                    <div className="relative overflow-hidden rounded-2xl p-8 bg-[url('/97.jpg')] bg-cover bg-center bg-no-repeat">
                       <div className="relative">
                         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg mb-6">
                           <Globe className="h-8 w-8" />
