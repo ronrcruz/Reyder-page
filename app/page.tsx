@@ -839,11 +839,7 @@ export default function Home() {
 
           <section id="shipping" ref={shippingRef} className="relative w-full py-20 md:py-32 bg-[#712f79] isolate z-5 overflow-hidden">
             <div
-              className="absolute top-[250px] left-[-150px] -translate-y-1/2 w-[500px] h-[600px] z-10 bg-[url('/tape1.png')] bg-contain bg-center bg-no-repeat opacity-100 transform -rotate-5"
-              aria-hidden="true"
-            ></div>
-            <div
-              className="absolute top-[250px] left-[-150px] -translate-y-1/2 w-[500px] h-[600px] z-10 bg-[url('/tape1.png')] bg-contain bg-center bg-no-repeat opacity-100 transform -rotate-5"
+              className="absolute top-[250px] left-[-225px] -translate-y-1/2 w-[500px] h-[600px] z-10 bg-[url('/tape1.png')] bg-contain bg-center bg-no-repeat opacity-100 transform -rotate-5"
               aria-hidden="true"
             ></div>
             <div
