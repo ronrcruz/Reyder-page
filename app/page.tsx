@@ -837,13 +837,17 @@ export default function Home() {
             style={{ marginTop: "-50px", marginBottom: "-120px" }}
           ></div>
 
-          <section id="shipping" ref={shippingRef} className="relative w-full py-20 md:py-32 bg-[#712f79] isolate z-5">
+          <section id="shipping" ref={shippingRef} className="relative w-full py-20 md:py-32 bg-[#712f79] isolate z-5 overflow-hidden">
             <div
-              className="absolute top-[-20px] left-[-30px] w-[200px] h-[200px] z-10 bg-[url('/50.png')] bg-contain bg-center bg-no-repeat opacity-30 transform -rotate-15"
+              className="absolute top-[250px] left-[-150px] -translate-y-1/2 w-[500px] h-[600px] z-10 bg-[url('/tape1.png')] bg-contain bg-center bg-no-repeat opacity-100 transform -rotate-5"
               aria-hidden="true"
             ></div>
             <div
-              className="absolute bottom-[-20px] right-[-40px] w-[250px] h-[250px] z-10 bg-[url('/27.png')] bg-contain bg-center bg-no-repeat opacity-30 transform rotate-10"
+              className="absolute top-[250px] left-[-150px] -translate-y-1/2 w-[500px] h-[600px] z-10 bg-[url('/tape1.png')] bg-contain bg-center bg-no-repeat opacity-100 transform -rotate-5"
+              aria-hidden="true"
+            ></div>
+            <div
+              className="absolute top-1/2 right-[-50px] -translate-y-1/2 w-[280px] h-[800px] z-10 bg-[url('/sidebubble.png')] bg-contain bg-center bg-no-repeat opacity-100 transform rotate-5"
               aria-hidden="true"
             ></div>
             <div className="container px-4 md:px-6 relative z-20">
@@ -869,7 +873,7 @@ export default function Home() {
                     className="relative overflow-visible"
                   >
                     <div className="relative overflow-hidden rounded-2xl p-8">
-                      <div className="absolute inset-0 bg-[url('/95.jpg')] bg-cover bg-center bg-no-repeat -scale-x-100" aria-hidden="true"></div>
+                      <div className="absolute inset-0 bg-[url('/cardboard3.jpg')] bg-cover bg-center bg-no-repeat -scale-x-100" aria-hidden="true"></div>
                       <div className="relative z-10">
                         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 to-purple-700 text-white shadow-lg mb-6">
                           <Truck className="h-8 w-8" />
@@ -919,7 +923,7 @@ export default function Home() {
                     transition={{ duration: 0.6, delay: 0.3 }}
                     className="relative"
                   >
-                    <div className="relative overflow-hidden rounded-2xl p-8 bg-[url('/12.png')] bg-cover bg-center bg-no-repeat">
+                    <div className="relative overflow-hidden rounded-2xl p-8 bg-[url('/cardboard1.png')] bg-cover bg-center bg-no-repeat">
                       <div className="relative">
                         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg mb-6">
                           <Globe className="h-8 w-8" />
