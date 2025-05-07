@@ -37,6 +37,7 @@ export default function Home() {
   const shrinkThreshold = 90;
 
   const headerInnerRef = useRef<HTMLDivElement>(null);
+  const currentScrollAnimation = useRef<(() => void) | null>(null); // Ref to store current scroll animation stop function
 
   // NEW: State to control the actual content and padding of buttons
   // This state is updated only AFTER fade-out is complete.
@@ -116,21 +117,29 @@ export default function Home() {
           const targetElement = document.querySelector(hash) as HTMLElement;
 
           if (targetElement) {
+            if (currentScrollAnimation.current) {
+              currentScrollAnimation.current(); // Stop existing animation
+            }
+
             const headerOffset = headerInnerRef.current ? headerInnerRef.current.offsetHeight : 0;
             const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
             const offsetPosition = elementPosition - headerOffset - 20; // 20px buffer
 
             window.history.pushState(null, '', hash);
 
-            animate(window.scrollY, offsetPosition, {
+            const animationControls = animate(window.scrollY, offsetPosition, {
               type: "spring",
               stiffness: 120,
-              damping: 25, // Increased damping for smoother stop
+              damping: 25,
               restDelta: 0.01,
               onUpdate: latest => {
                 window.scrollTo(0, latest);
+              },
+              onComplete: () => {
+                currentScrollAnimation.current = null; // Clear on completion
               }
             });
+            currentScrollAnimation.current = animationControls.stop; // Store stop function
           }
         }
       }
@@ -140,7 +149,28 @@ export default function Home() {
     return () => {
       document.removeEventListener('click', handleNavClick);
     };
-  }, []); // Empty dependency array: runs once on mount to set up/clean up listener
+  }, []);
+
+  // Effect to handle user scroll interruption
+  useEffect(() => {
+    const handleUserScroll = () => {
+      if (currentScrollAnimation.current) {
+        currentScrollAnimation.current();
+        currentScrollAnimation.current = null;
+      }
+    };
+
+    window.addEventListener('wheel', handleUserScroll, { passive: true });
+    window.addEventListener('touchmove', handleUserScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('wheel', handleUserScroll);
+      window.removeEventListener('touchmove', handleUserScroll);
+      if (currentScrollAnimation.current) {
+        currentScrollAnimation.current(); // Stop on unmount if active
+      }
+    };
+  }, []);
 
   // --- Animation Variants (Header Bar) ---
   const headerVariants = {
@@ -238,15 +268,22 @@ export default function Home() {
               initial="initial"
               style={{ transformOrigin: 'left center', willChange: 'transform', cursor: 'pointer' }}
               onClick={() => {
-                animate(window.scrollY, 0, {
+                if (currentScrollAnimation.current) {
+                  currentScrollAnimation.current(); // Stop existing animation
+                }
+                const animationControls = animate(window.scrollY, 0, {
                   type: "spring",
                   stiffness: 120,
                   damping: 25,
                   restDelta: 0.01,
                   onUpdate: latest => {
                     window.scrollTo(0, latest);
+                  },
+                  onComplete: () => {
+                    currentScrollAnimation.current = null; // Clear on completion
                   }
                 });
+                currentScrollAnimation.current = animationControls.stop; // Store stop function
                 window.history.pushState(null, '', window.location.pathname);
               }}
             >
