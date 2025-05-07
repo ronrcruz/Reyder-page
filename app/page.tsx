@@ -513,67 +513,94 @@ export default function Home() {
                   initial={{ opacity: 0, x: -50 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                  className="flex flex-col justify-center space-y-6"
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                  className="flex flex-col justify-center space-y-8"
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 to-purple-700 text-white shadow-lg">
-                      <Phone className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-[#5A2964]">Premium Inventory</h3>
-                      <p className="text-[#222222] mt-2">
-                        Access a wide selection of thoroughly tested and graded mobile devices from leading manufacturers.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg">
-                      <Laptop className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-[#5A2964]">Competitive Pricing</h3>
-                      <p className="text-[#222222] mt-2">
-                        Our auction platform ensures fair market pricing for all inventory, helping you maximize your
-                        margins.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 to-purple-700 text-white shadow-lg">
-                      <Tablet className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-[#5A2964]">Trusted Partner</h3>
-                      <p className="text-[#222222] mt-2">
-                        Join hundreds of businesses who trust Reyder Enterprises for their inventory needs year after
-                        year.
-                      </p>
-                    </div>
-                  </div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                  >
+                    <h4 className="text-2xl font-semibold text-[#5A2964] mb-3 leading-tight">
+                      Driven by Quality, Powered by Trust.
+                    </h4>
+                    <p className="text-[#3a3a3a] text-md mb-8">
+                      At Reyder Enterprises, we're not just about devices; we're about building lasting partnerships through transparency, reliability, and unparalleled service in the mobile wholesale industry.
+                    </p>
+                  </motion.div>
+
+                  {[
+                    {
+                      icon: <Phone className="h-6 w-6" />,
+                      title: "Premium Inventory",
+                      description: "Access a wide selection of thoroughly tested and graded mobile devices from leading manufacturers.",
+                      gradient: "from-purple-600 to-purple-700",
+                      delay: 0.5
+                    },
+                    {
+                      icon: <Laptop className="h-6 w-6" />,
+                      title: "Competitive Pricing",
+                      description: "Our auction platform ensures fair market pricing for all inventory, helping you maximize your margins.",
+                      gradient: "from-green-500 to-green-600",
+                      delay: 0.7
+                    },
+                    {
+                      icon: <Tablet className="h-6 w-6" />,
+                      title: "Trusted Partner",
+                      description: "Join hundreds of businesses who trust Reyder Enterprises for their inventory needs year after year.",
+                      gradient: "from-purple-600 to-purple-700",
+                      delay: 0.9
+                    }
+                  ].map((feature, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.4 }}
+                      transition={{ duration: 0.5, delay: feature.delay }}
+                      className="bg-white/70 backdrop-blur-md p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200/60"
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className={`flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br ${feature.gradient} text-white shadow-md flex-shrink-0`}>
+                          {feature.icon}
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-[#5A2964]">{feature.title}</h3>
+                          <p className="text-[#222222] mt-2">
+                            {feature.description}
+                          </p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, x: 50 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
                   className="flex justify-center"
                 >
                   <div className="relative">
                     <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-purple-600 to-green-500 opacity-30 blur-xl"></div>
-                    <div className="relative overflow-hidden rounded-2xl bg-white shadow-xl">
+                    <motion.div
+                      className="relative overflow-hidden rounded-2xl bg-white shadow-xl"
+                      whileHover={{ scale: 1.03 }}
+                      transition={{ duration: 0.3 }}
+                    >
                       <Image
-                        src="/about-image.jpg"
+                        src="/manhat.png"
                         width={600}
                         height={400}
-                        alt="Mobile devices showcase"
+                        alt="Manhattan cityscape representing Reyder Enterprises' global presence"
                         className="w-full h-auto object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-tr from-purple-700/40 to-transparent"></div>
                       <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
-                        <p className="text-white font-medium">Premium devices, thoroughly tested and graded</p>
+                        <p className="text-white font-semibold text-sm tracking-tight">Premium Devices, Rigorously Vetted</p>
                       </div>
-                    </div>
+                    </motion.div>
                   </div>
                 </motion.div>
               </div>
