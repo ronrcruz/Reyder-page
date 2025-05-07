@@ -90,12 +90,14 @@ export default function Home() {
         auctionShowsText: !isShrunk,
       });
 
-      // 3. Fade in buttons
-      // A tiny delay can sometimes help ensure the DOM update from setButtonAppearance is fully processed
-      // before the fade-in starts, though often not strictly necessary with async/await.
+      // NEW: Explicitly wait for a short period to allow React to process the state update
+      // and re-render the button content/styles in the DOM before fading back in.
+      await new Promise(resolve => setTimeout(resolve, 50)); // 50ms pause
+
+      // 3. Fade in buttons (now without their own internal delay property)
       await Promise.all([
-        contactOpacityControls.start({ opacity: 1 }, { duration: 0.25, ease: "easeInOut", delay: 0.15 }),
-        auctionOpacityControls.start({ opacity: 1 }, { duration: 0.25, ease: "easeInOut", delay: 0.15 })
+        contactOpacityControls.start({ opacity: 1 }, { duration: 0.25, ease: "easeInOut" }),
+        auctionOpacityControls.start({ opacity: 1 }, { duration: 0.25, ease: "easeInOut" })
       ]);
     };
 
