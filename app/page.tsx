@@ -1092,12 +1092,6 @@ export default function Home() {
               </p>
             </div>
             <nav className="flex gap-4 sm:gap-6">
-              <Link href="#" className="text-sm text-[#2F7971] hover:underline underline-offset-4">
-                Terms
-              </Link>
-              <Link href="#" className="text-sm text-[#2F7971] hover:underline underline-offset-4">
-                Privacy
-              </Link>
               <Link href="#contact" className="text-sm text-[#2F7971] hover:underline underline-offset-4">
                 Contact
               </Link>
