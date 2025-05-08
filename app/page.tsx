@@ -630,7 +630,7 @@ export default function Home() {
                     <div className="md:order-1 md:pr-16 lg:pr-24">
                        <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
                          <Image
-                          src="/data-wiping.jpg"
+                          src="/resetiPhone.jpeg"
                           width={400}
                           height={250}
                           alt="Secure data wiping"
@@ -651,7 +651,7 @@ export default function Home() {
                     <div className="md:order-2 md:pl-16 lg:pl-24">
                        <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
                          <Image
-                          src="/cleaning.jpg"
+                          src="/cleaningiPhone.jpeg"
                           width={400}
                           height={250}
                           alt="Professional Cleaning"
@@ -672,7 +672,7 @@ export default function Home() {
                      <div className="md:order-1 md:pr-16 lg:pr-24">
                        <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
                           <Image
-                            src="/testing.jpg"
+                            src="/diagnose.jpeg"
                             width={400}
                             height={250}
                             alt="Comprehensive Testing"
@@ -693,7 +693,7 @@ export default function Home() {
                     <div className="md:order-2 md:pl-16 lg:pl-24">
                        <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
                           <Image
-                            src="/grading.jpg"
+                            src="/grading.jpeg"
                             width={400}
                             height={250}
                             alt="Detailed Grading"
