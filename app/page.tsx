@@ -392,7 +392,7 @@ export default function Home() {
                 className="grid grid-cols-2 md:grid-cols-4 gap-8"
                 onViewportEnter={() => {
                   const controls = {
-                    devices: animate(0, 100000, {
+                    devices: animate(0, 10000, {
                       duration: 1.5,
                       ease: "easeOut",
                       onUpdate(value) {
@@ -406,7 +406,7 @@ export default function Home() {
                         setDisplayedStatsValues(prev => ({ ...prev, partners: Math.round(value) }));
                       }
                     }),
-                    years: animate(0, 20, {
+                    years: animate(0, 15, {
                       duration: 1.5,
                       ease: "easeOut",
                       onUpdate(value) {
