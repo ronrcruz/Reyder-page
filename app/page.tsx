@@ -341,7 +341,7 @@ export default function Home() {
           <section className="relative w-full min-h-[80vh] flex items-center overflow-hidden">
             {/* <div className="absolute inset-0 bg-gradient-to-br from-purple-800 via-purple-700 to-purple-900"></div> */}
 
-            <VideoBackground src="/hero.webm" />
+            <VideoBackground src="/hero2.webm" />
 
             <div 
               className="absolute inset-0 bg-gradient-to-b from-black/35 to-black/60 backdrop-blur-[1px] backdrop-brightness-90"
