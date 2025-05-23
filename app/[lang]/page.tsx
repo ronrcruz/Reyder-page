@@ -8,8 +8,12 @@ import { motion, animate, useScroll, useMotionValueEvent, LazyMotion, domAnimati
 import { Logo } from "@/components/logo"
 import { BrandButton } from "@/components/brand-button"
 import { VideoBackground } from "@/components/video-background"
+import { useTranslation } from "../../lib/i18n-client"
+import LanguageSwitcher from "@/components/LanguageSwitcher"
 
-export default function Home() {
+export default function Home({ params: { lang } }: { params: { lang: string } }) {
+  const { t } = useTranslation(lang, 'common')
+
   const [isVisible, setIsVisible] = useState({
     process: false,
     grading: false,
@@ -257,57 +261,62 @@ export default function Home() {
           <motion.div
             ref={headerInnerRef}
             layout
-            className={`relative mx-auto flex items-center px-4 md:px-6 backdrop-blur-md ${isShrunk ? 'shadow-md' : ''}`}
+            className={`relative mx-auto flex items-center justify-between px-4 md:px-6 backdrop-blur-md ${isShrunk ? 'shadow-md' : ''}`}
             variants={containerVariants}
             animate={isShrunk ? 'shrunk' : 'initial'}
             initial="initial"
             transition={{ duration: 0.4, ease: "easeInOut" }}
             style={{ willChange: 'transform, width, border-radius, padding, background-color, border-color' }}
           >
-            <motion.div
-              variants={logoVariants}
-              animate={isShrunk ? 'shrunk' : 'initial'}
-              initial="initial"
-              style={{ transformOrigin: 'left center', willChange: 'transform', cursor: 'pointer' }}
-              onClick={() => {
-                if (currentScrollAnimation.current) {
-                  currentScrollAnimation.current(); // Stop existing animation
-                }
-                const animationControls = animate(window.scrollY, 0, {
-                  type: "spring",
-                  stiffness: 120,
-                  damping: 25,
-                  restDelta: 0.01,
-                  onUpdate: latest => {
-                    window.scrollTo(0, latest);
-                  },
-                  onComplete: () => {
-                    currentScrollAnimation.current = null; // Clear on completion
+            <div className="flex items-center">
+              <motion.div
+                variants={logoVariants}
+                animate={isShrunk ? 'shrunk' : 'initial'}
+                initial="initial"
+                style={{ transformOrigin: 'left center', willChange: 'transform', cursor: 'pointer' }}
+                onClick={() => {
+                  if (currentScrollAnimation.current) {
+                    currentScrollAnimation.current(); // Stop existing animation
                   }
-                });
-                currentScrollAnimation.current = animationControls.stop; // Store stop function
-                window.history.pushState(null, '', window.location.pathname);
-              }}
-            >
-              <Logo />
-            </motion.div>
+                  const animationControls = animate(window.scrollY, 0, {
+                    type: "spring",
+                    stiffness: 120,
+                    damping: 25,
+                    restDelta: 0.01,
+                    onUpdate: latest => {
+                      window.scrollTo(0, latest);
+                    },
+                    onComplete: () => {
+                      currentScrollAnimation.current = null; // Clear on completion
+                    }
+                  });
+                  currentScrollAnimation.current = animationControls.stop; // Store stop function
+                  window.history.pushState(null, '', window.location.pathname);
+                }}
+              >
+                <Logo />
+              </motion.div>
+              <div className="ml-4">
+                <LanguageSwitcher />
+              </div>
+            </div>
 
             <nav className="hidden md:flex gap-6 absolute left-1/2 transform -translate-x-1/2">
               <Link href="#about" className="text-sm font-medium text-[#222222] hover:text-[#2F7971] transition-colors">
-                About
+                {t('nav_about')}
               </Link>
               <Link href="#process" className="text-sm font-medium text-[#222222] hover:text-[#2F7971] transition-colors">
-                Our Process
+                {t('nav_process')}
               </Link>
               <Link href="#grading" className="text-sm font-medium text-[#222222] hover:text-[#2F7971] transition-colors">
-                Grading System
+                {t('nav_grading')}
               </Link>
               <Link href="#shipping" className="text-sm font-medium text-[#222222] hover:text-[#2F7971] transition-colors">
-                Shipping
+                {t('nav_shipping')}
               </Link>
             </nav>
 
-            <div className="absolute top-1/2 right-4 md:right-6 transform -translate-y-1/2 flex items-center gap-4">
+            <div className="flex items-center gap-2 md:gap-4">
               <motion.a
                 href="#contact"
                 className={`inline-flex h-10 items-center justify-center rounded-full border-2 border-[#712F79] bg-transparent text-sm font-medium text-[#712F79] shadow-sm transition-colors hover:bg-[#712F79] hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#5A2964] overflow-hidden whitespace-nowrap ${buttonAppearance.contactShowsText ? 'px-6' : 'px-3'}`}
@@ -316,7 +325,7 @@ export default function Home() {
                 animate={contactOpacityControls}
               >
                 {buttonAppearance.contactShowsText ? 
-                  <span style={{ overflow: 'hidden', whiteSpace: 'nowrap' }}>Contact Us</span> :
+                  <span style={{ overflow: 'hidden', whiteSpace: 'nowrap' }}>{t('nav_button_contact')}</span> :
                   <Phone className="h-5 w-5 flex-shrink-0" />
                 }
               </motion.a>
@@ -330,7 +339,7 @@ export default function Home() {
                 animate={auctionOpacityControls}
               >
                 {buttonAppearance.auctionShowsText ? 
-                  <span style={{ overflow: 'hidden', whiteSpace: 'nowrap' }}>Become a Buyer</span> :
+                  <span style={{ overflow: 'hidden', whiteSpace: 'nowrap' }}>{t('nav_button_buyer')}</span> :
                   <ShoppingBag className="h-5 w-5 flex-shrink-0" />
                 }
               </motion.a>
@@ -355,14 +364,13 @@ export default function Home() {
                 className="max-w-3xl mx-auto text-center space-y-8"
               >
                 <h1 className="text-4xl font-bold tracking-tighter text-white sm:text-5xl xl:text-6xl/none">
-                  Upgrade Your Inventory with{" "}
+                  {t('hero_title_line1')}{" "}
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-green-500">
-                    Premium Devices
+                    {t('hero_title_line2_highlight')}
                   </span>
                 </h1>
                 <p className="max-w-[800px] mx-auto text-white/90 text-lg md:text-xl">
-                Reyder Enterprises offers Daily Access to Premium Mobile Inventory.
-                Join top resellers in exclusive auctions built for speed, profit, and serious volume.
+                  {t('hero_subtitle')}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
                   <BrandButton
@@ -373,13 +381,13 @@ export default function Home() {
                     size="lg"
                     icon
                   >
-                    Create an Account
+                    {t('hero_button_create_account')}
                   </BrandButton>
                   <Link
                     href="#contact"
                     className="inline-flex h-12 items-center justify-center rounded-full border-2 border-[#712F79] bg-transparent px-8 text-sm font-medium text-[#712F79] shadow-lg backdrop-blur-md transition-all hover:bg-[#712F79] hover:text-white hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5A2964]"
                   >
-                    Contact Us
+                    {t('hero_button_contact_us')}
                   </Link>
                 </div>
               </motion.div>
@@ -441,7 +449,7 @@ export default function Home() {
                   <div className="text-3xl md:text-4xl font-bold text-[#5A2964]">
                     {displayedStatsValues.devices.toLocaleString()}
                   </div>
-                  <p className="text-sm text-[#222222] mt-1">Devices Processed</p>
+                  <p className="text-sm text-[#222222] mt-1">{t('stats_devices_processed')}</p>
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -453,7 +461,7 @@ export default function Home() {
                   <div className="text-3xl md:text-4xl font-bold text-[#5A2964]">
                     {displayedStatsValues.partners}+
                   </div>
-                  <p className="text-sm text-[#222222] mt-1">Business Partners</p>
+                  <p className="text-sm text-[#222222] mt-1">{t('stats_business_partners')}</p>
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -465,7 +473,7 @@ export default function Home() {
                   <div className="text-3xl md:text-4xl font-bold text-[#5A2964]">
                     {displayedStatsValues.years}+
                   </div>
-                  <p className="text-sm text-[#222222] mt-1">Years in Business</p>
+                  <p className="text-sm text-[#222222] mt-1">{t('stats_years_in_business')}</p>
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -477,7 +485,7 @@ export default function Home() {
                   <div className="text-3xl md:text-4xl font-bold text-[#5A2964]">
                     {displayedStatsValues.countries}+
                   </div>
-                  <p className="text-sm text-[#222222] mt-1">Countries Served</p>
+                  <p className="text-sm text-[#222222] mt-1">{t('stats_countries_served')}</p>
                 </motion.div>
               </motion.div>
             </div>
@@ -501,12 +509,10 @@ export default function Home() {
                   className="space-y-2"
                 >
                   <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-[#5A2964]">
-                    About Reyder Enterprises
+                    {t('about_title')}
                   </h2>
                   <p className="max-w-[900px] text-[#222222] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    Reyder Enterprises is a leading mobile device wholesale company providing high-quality devices to
-                    businesses worldwide. Our exclusive auctions platform connects you with premium inventory at
-                    competitive prices.
+                    {t('about_subtitle')}
                   </p>
                 </motion.div>
               </div>
@@ -525,32 +531,32 @@ export default function Home() {
                     transition={{ duration: 0.5, delay: 0.3 }}
                   >
                     <h4 className="text-2xl font-semibold text-[#5A2964] mb-3 leading-tight">
-                      Driven by Quality, Powered by Trust.
+                      {t('about_feature_title_quality')}
                     </h4>
                     <p className="text-[#3a3a3a] text-md mb-8">
-                      At Reyder Enterprises, we're not just about devices; we're about building lasting partnerships through transparency, reliability, and unparalleled service in the mobile wholesale industry.
+                      {t('about_feature_text_quality')}
                     </p>
                   </motion.div>
 
                   {[
                     {
                       icon: <Phone className="h-6 w-6" />,
-                      title: "Premium Inventory",
-                      description: "Access a wide selection of thoroughly tested and graded mobile devices from leading manufacturers.",
+                      title: t('about_feature1_title'),
+                      description: t('about_feature1_desc'),
                       gradient: "from-purple-600 to-purple-700",
                       delay: 0.5
                     },
                     {
                       icon: <Laptop className="h-6 w-6" />,
-                      title: "Competitive Pricing",
-                      description: "Our auction platform ensures fair market pricing for all inventory, helping you maximize your margins.",
+                      title: t('about_feature2_title'),
+                      description: t('about_feature2_desc'),
                       gradient: "from-green-500 to-green-600",
                       delay: 0.7
                     },
                     {
                       icon: <Tablet className="h-6 w-6" />,
-                      title: "Trusted Partner",
-                      description: "Join hundreds of businesses who trust Reyder Enterprises for their inventory needs year after year.",
+                      title: t('about_feature3_title'),
+                      description: t('about_feature3_desc'),
                       gradient: "from-purple-600 to-purple-700",
                       delay: 0.9
                     }
@@ -595,12 +601,12 @@ export default function Home() {
                         src="/manhat.png"
                         width={600}
                         height={400}
-                        alt="Manhattan cityscape representing Reyder Enterprises' global presence"
+                        alt={t('about_image_alt')}
                         className="w-full h-auto object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-tr from-purple-700/40 to-transparent"></div>
                       <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
-                        <p className="text-white font-semibold text-sm tracking-tight">Premium Devices, Rigorously Vetted</p>
+                        <p className="text-white font-semibold text-sm tracking-tight">{t('about_image_caption')}</p>
                       </div>
                     </motion.div>
                   </div>
@@ -612,9 +618,9 @@ export default function Home() {
           <section id="process" className="w-full py-20 md:py-32 bg-[#F7FAF9] overflow-hidden">
             <div className="container px-4 md:px-6">
               <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16 md:mb-24">
-                 <h2 className="text-4xl font-bold tracking-tight sm:text-5xl text-[#5A2964]">Our Streamlined Process</h2>
+                 <h2 className="text-4xl font-bold tracking-tight sm:text-5xl text-[#5A2964]">{t('process_title')}</h2>
                  <p className="max-w-[700px] mx-auto text-[#222222] md:text-xl/relaxed">
-                   Follow our rigorous steps ensuring quality and security for every device.
+                   {t('process_subtitle')}
                  </p>
               </div>
 
@@ -636,9 +642,9 @@ export default function Home() {
                           alt="Secure data wiping"
                           className="rounded-lg w-full h-auto object-cover mb-4 shadow-sm"
                         />
-                        <h3 className="text-2xl font-semibold mb-2 text-[#5A2964] text-center md:text-left">1. Secure Data Wiping</h3>
+                        <h3 className="text-2xl font-semibold mb-2 text-[#5A2964] text-center md:text-left">{t('process_step1_title')}</h3>
                         <p className="text-[#222222] text-center md:text-left">
-                          All devices undergo certified, secure data wiping procedures to protect privacy and ensure compliance.
+                          {t('process_step1_desc')}
                         </p>
                       </div>
                     </div>
@@ -657,9 +663,9 @@ export default function Home() {
                           alt="Professional Cleaning"
                           className="rounded-lg w-full h-auto object-cover mb-4 shadow-sm"
                         />
-                        <h3 className="text-2xl font-semibold mb-2 text-[#5A2964] text-center md:text-left">2. Professional Cleaning</h3>
+                        <h3 className="text-2xl font-semibold mb-2 text-[#5A2964] text-center md:text-left">{t('process_step2_title')}</h3>
                         <p className="text-[#222222] text-center md:text-left">
-                          Devices are meticulously cleaned and sanitized to meet high presentation standards.
+                          {t('process_step2_desc')}
                         </p>
                        </div>
                     </div>
@@ -678,9 +684,9 @@ export default function Home() {
                             alt="Comprehensive Testing"
                             className="rounded-lg w-full h-auto object-cover mb-4 shadow-sm"
                           />
-                          <h3 className="text-2xl font-semibold mb-2 text-[#5A2964] text-center md:text-left">3. Comprehensive Testing</h3>
+                          <h3 className="text-2xl font-semibold mb-2 text-[#5A2964] text-center md:text-left">{t('process_step3_title')}</h3>
                           <p className="text-[#222222] text-center md:text-left">
-                            Rigorous multi-point testing ensures full hardware and software functionality.
+                            {t('process_step3_desc')}
                           </p>
                        </div>
                     </div>
@@ -699,164 +705,15 @@ export default function Home() {
                             alt="Detailed Grading"
                             className="rounded-lg w-full h-auto object-cover mb-4 shadow-sm"
                           />
-                          <h3 className="text-2xl font-semibold mb-2 text-[#5A2964] text-center md:text-left">4. Detailed Grading</h3>
+                          <h3 className="text-2xl font-semibold mb-2 text-[#5A2964] text-center md:text-left">{t('process_step4_title')}</h3>
                           <p className="text-[#222222] text-center md:text-left">
-                             Expert technicians assign grades based on a transparent, detailed system.
+                             {t('process_step4_desc')}
                           </p>
                         </div>
                     </div>
                   </div>
 
                 </div>
-              </div>
-            </div>
-          </section>
-
-          <section 
-            id="grading" 
-            ref={gradingSystemRef} 
-            className="relative w-full py-16 md:py-20"
-            style={{
-              background: `linear-gradient(to bottom, #F7FAF9 0%, #F7FAF9 80%, transparent 100%)`,
-              marginBottom: "-50px",
-              zIndex: 5,
-              position: "relative"
-            }}
-          >
-            <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-            <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-            
-            <div className="container relative z-10 px-4 md:px-6">
-              <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5 }}
-                  className="space-y-2"
-                >
-                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-[#5A2964]">Our Grading System</h2>
-                  <p className="max-w-[900px] text-[#222222] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    We use a comprehensive in-house grading system to ensure transparency and quality.
-                  </p>
-                </motion.div>
-              </div>
-              <div className="mx-auto max-w-6xl">
-                <div className="grid gap-6 md:grid-cols-3">
-                  <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={isGradingSystemVisible ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5, delay: 0.1 }}
-                    className="col-span-3 md:col-span-1"
-                  >
-                    <div className="relative h-full overflow-hidden rounded-2xl bg-[#E8DFF1] p-6 text-[#222222] shadow-xl border border-gray-200">
-                      <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-[#5A2964]/10"></div>
-                      <div className="absolute -bottom-8 -left-8 h-40 w-40 rounded-full bg-[#5A2964]/10"></div>
-                      <h3 className="text-2xl font-bold mb-4 text-[#5A2964]">Premium Grade</h3>
-                      <p className="mb-6">Our highest quality devices with minimal to no signs of use.</p>
-                      <div className="space-y-3">
-                        <div className="flex items-center gap-2">
-                          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#5A2964] text-white font-bold">
-                            A+
-                          </div>
-                          <span>Like new condition</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#5A2964] text-white font-bold">
-                            A
-                          </div>
-                          <span>Excellent condition</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#5A2964] text-white font-bold">
-                            A-
-                          </div>
-                          <span>Very good condition</span>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={isGradingSystemVisible ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5, delay: 0.3 }}
-                    className="col-span-3 md:col-span-1"
-                  >
-                    <div className="relative h-full overflow-hidden rounded-2xl bg-[#E4F5D2] p-6 text-[#222222] shadow-xl border border-gray-200">
-                      <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-[#4B7918]/10"></div>
-                      <div className="absolute -bottom-8 -left-8 h-40 w-40 rounded-full bg-[#4B7918]/10"></div>
-                      <h3 className="text-2xl font-bold mb-4 text-[#5A2964]">Standard Grade</h3>
-                      <p className="mb-6">Good quality devices with minor signs of use but fully functional.</p>
-                      <div className="space-y-3">
-                        <div className="flex items-center gap-2">
-                          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#4B7918] text-white font-bold">
-                            B+
-                          </div>
-                          <span>Good condition</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#4B7918] text-white font-bold">
-                            B
-                          </div>
-                          <span>Fair condition</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#4B7918] text-white font-bold">
-                            B-
-                          </div>
-                          <span>Acceptable condition</span>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={isGradingSystemVisible ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    className="col-span-3 md:col-span-1"
-                  >
-                    <div className="relative h-full overflow-hidden rounded-2xl bg-[#DDE9F0] p-6 text-[#222222] shadow-xl border border-gray-200">
-                      <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-[#5A2964]/10"></div>
-                      <div className="absolute -bottom-8 -left-8 h-40 w-40 rounded-full bg-[#5A2964]/10"></div>
-                      <h3 className="text-2xl font-bold mb-4 text-[#5A2964]">Economy Grade</h3>
-                      <p className="mb-6">Functional devices with noticeable signs of use at lower price points.</p>
-                      <div className="space-y-3">
-                        <div className="flex items-center gap-2">
-                          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#5A2964] text-white font-bold">
-                            C+
-                          </div>
-                          <span>Moderate wear</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#5A2964] text-white font-bold">
-                            C
-                          </div>
-                          <span>Heavy wear</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#5A2964] text-white font-bold">
-                            C-
-                          </div>
-                          <span>Significant wear</span>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={isGradingSystemVisible ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.7 }}
-                  className="mt-12 text-center"
-                >
-                  <Link
-                    href="#"
-                    className="inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-medium text-[#2F7971] transition-colors hover:underline underline-offset-4"
-                  >
-                    Learn more about our grading system
-                    <ChevronRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </motion.div>
               </div>
             </div>
           </section>
@@ -885,7 +742,7 @@ export default function Home() {
                   className="space-y-2"
                 >
                   <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-[#ffffff]"> 
-                    We Ship Everywhere.
+                    {t('shipping_title')}
                   </h2>
                 </motion.div>
               </div>
@@ -904,38 +761,36 @@ export default function Home() {
                           <Truck className="h-8 w-8" />
                         </div>
                         <div className="inline-block bg-slate-100 rounded-full px-4 py-1 mb-4">
-                          <h3 className="text-2xl font-bold text-[#5A2964]">Domestic Shipping</h3>
+                          <h3 className="text-2xl font-bold text-[#5A2964]">{t('shipping_domestic_title')}</h3>
                         </div>
                         <div className="bg-black/25 rounded-md p-3">
                           <p className="text-slate-100 mb-4">
-                            We offer <span className="font-bold text-green-300">FREE shipping</span> on all domestic orders
-                            within the United States. Your devices will be carefully packaged and shipped with tracking
-                            information provided.
+                            <span dangerouslySetInnerHTML={{ __html: t('shipping_domestic_desc').replace("FREE shipping", "<span class=\"font-bold text-green-300\">FREE shipping</span>") }}></span>
                           </p>
                           <ul className="space-y-3">
                             <li className="flex items-center gap-3">
                               <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971] text-white">
                                 <Check className="h-4 w-4" />
                               </div>
-                              <span className="text-slate-200">Free shipping on all US orders</span>
+                              <span className="text-slate-200">{t('shipping_domestic_li1')}</span>
                             </li>
                             <li className="flex items-center gap-3">
                               <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971] text-white">
                                 <Check className="h-4 w-4" />
                               </div>
-                              <span className="text-slate-200">Secure packaging for safe delivery</span>
+                              <span className="text-slate-200">{t('shipping_domestic_li2')}</span>
                             </li>
                             <li className="flex items-center gap-3">
                               <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971] text-white">
                                 <Check className="h-4 w-4" />
                               </div>
-                              <span className="text-slate-200">Tracking information provided</span>
+                              <span className="text-slate-200">{t('shipping_domestic_li3')}</span>
                             </li>
                             <li className="flex items-center gap-3">
                               <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971] text-white">
                                 <Check className="h-4 w-4" />
                               </div>
-                              <span className="text-slate-200">Fast processing times</span>
+                              <span className="text-slate-200">{t('shipping_domestic_li4')}</span>
                             </li>
                           </ul>
                         </div>
@@ -954,37 +809,36 @@ export default function Home() {
                           <Globe className="h-8 w-8" />
                         </div>
                         <div className="inline-block bg-slate-100 rounded-full px-4 py-1 mb-4">
-                          <h3 className="text-2xl font-bold text-[#5A2964]">International Shipping</h3>
+                          <h3 className="text-2xl font-bold text-[#5A2964]">{t('shipping_international_title')}</h3>
                         </div>
                         <div className="bg-black/25 rounded-md p-3">
                           <p className="text-slate-100 mb-4">
-                            We ship to businesses worldwide. International shipping rates are calculated based on
-                            destination and order volume. Contact us for custom shipping quotes.
+                            {t('shipping_international_desc')}
                           </p>
                           <ul className="space-y-3">
                             <li className="flex items-center gap-3">
                               <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971] text-white">
                                 <Check className="h-4 w-4" />
                               </div>
-                              <span className="text-slate-200">Worldwide shipping available</span>
+                              <span className="text-slate-200">{t('shipping_international_li1')}</span>
                             </li>
                             <li className="flex items-center gap-3">
                               <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971] text-white">
                                 <Check className="h-4 w-4" />
                               </div>
-                              <span className="text-slate-200">Customs documentation assistance</span>
+                              <span className="text-slate-200">{t('shipping_international_li2')}</span>
                             </li>
                             <li className="flex items-center gap-3">
                               <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971] text-white">
                                 <Check className="h-4 w-4" />
                               </div>
-                              <span className="text-slate-200">Volume discounts available</span>
+                              <span className="text-slate-200">{t('shipping_international_li3')}</span>
                             </li>
                             <li className="flex items-center gap-3">
                               <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F7971] text-white">
                                 <Check className="h-4 w-4" />
                               </div>
-                              <span className="text-slate-200">International tracking provided</span>
+                              <span className="text-slate-200">{t('shipping_international_li4')}</span>
                             </li>
                           </ul>
                         </div>
@@ -1009,11 +863,10 @@ export default function Home() {
                   className="space-y-4"
                 >
                   <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-[#5A2964]">
-                    Ready to Access Premium Mobile Devices?
+                    {t('cta_title')}
                   </h2>
                   <p className="max-w-[900px] text-[#222222] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    Join our auctions platform today and discover high-quality mobile devices at competitive wholesale
-                    prices.
+                    {t('cta_subtitle')}
                   </p>
                   <div className="mx-auto w-full max-w-sm space-y-4 pt-4">
                     <BrandButton
@@ -1024,10 +877,10 @@ export default function Home() {
                       size="lg"
                       icon
                     >
-                      Sign Up For Auctions
+                      {t('cta_button_text')}
                     </BrandButton>
                     <p className="text-sm text-gray-600">
-                      Join hundreds of businesses already sourcing from Reyder Enterprises.
+                      {t('cta_join_text')}
                     </p>
                   </div>
                 </motion.div>
@@ -1046,38 +899,38 @@ export default function Home() {
                 className="space-y-2"
               >
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-[#5A2964]">
-                  Get In Touch
+                  {t('contact_title')}
                 </h2>
                 <p className="max-w-[900px] text-[#222222] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Have questions or ready to get started? Contact us today!
+                  {t('contact_subtitle')}
                 </p>
               </motion.div>
             </div>
             <div className="mx-auto max-w-4xl text-center flex flex-col md:flex-row gap-8 justify-center">
               <div className="bg-white p-6 rounded-lg shadow-md flex-1">
-                <h3 className="text-xl font-semibold mb-4 text-purple-700">Contact us on WhatsApp</h3>
+                <h3 className="text-xl font-semibold mb-4 text-purple-700">{t('contact_whatsapp_title')}</h3>
                 <p className="text-gray-600 mb-4">
-                  Click the button below to start a chat with us on WhatsApp.
+                  {t('contact_whatsapp_desc')}
                 </p>
                 <BrandButton
                   href="#"
                   className="inline-flex h-12 items-center justify-center rounded-full bg-[#6BAD23] px-8 text-sm font-medium text-white shadow-lg transition-colors hover:bg-[#4B7918] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4B7918]"
                 >
-                  Chat on WhatsApp
+                  {t('contact_whatsapp_button')}
                 </BrandButton>
               </div>
 
               <div className="bg-white p-6 rounded-lg shadow-md flex-1">
-                <h3 className="text-xl font-semibold mb-4 text-purple-700">Send us an Email</h3>
+                <h3 className="text-xl font-semibold mb-4 text-purple-700">{t('contact_email_title')}</h3>
                 <p className="text-gray-600 mb-4">
-                  Click the button below to send us an email.
+                  {t('contact_email_desc')}
                 </p>
                 <BrandButton
                   href="mailto:sales@reyderenterprises.com"
                   variant="green"
                   size="lg"
                 >
-                  Send Email
+                  {t('contact_email_button')}
                 </BrandButton>
               </div>
             </div>
@@ -1088,12 +941,12 @@ export default function Home() {
             <div className="flex items-center gap-2">
               <Logo size="small" />
               <p className="text-sm text-[#222222]">
-                © {new Date().getFullYear()} Reyder Enterprises. All rights reserved.
+                {t('footer_copyright', { year: new Date().getFullYear() })}
               </p>
             </div>
             <nav className="flex gap-4 sm:gap-6">
               <Link href="#contact" className="text-sm text-[#2F7971] hover:underline underline-offset-4">
-                Contact
+                {t('footer_contact_link')}
               </Link>
             </nav>
           </div>
@@ -1101,4 +954,4 @@ export default function Home() {
       </div>
     </LazyMotion>
   )
-}
+} 
