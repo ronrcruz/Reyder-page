@@ -201,7 +201,7 @@ export default function Home({ params: { lang } }: { params: { lang: string } })
       borderBottomWidth: '1px',
     },
     shrunk: {
-      width: '800px',
+      width: '960px',
       borderRadius: '999px',
       paddingTop: '0.5rem',
       paddingBottom: '0.5rem',
